@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Alert, Animated } from 'react-native';
 import { Input, Button, Icon, Text, Image } from '@rneui/themed';
-import CommonHeader from '../CommonComponents/CommonHeader';
-import {ScaleSize, handleDeepLinkNavigation} from '../Utils';
-import { COLORS, DeepLinks } from '../Constants';
+import {ScaleSize, handleDeepLinkNavigation} from '../../../Utils';
+import { COLORS, DeepLinks } from '../../../Constants';
 
-const LoginScreen = ({ navigation }: any) => {
+const GetStartedIntroPageForWeb = ({ navigation }: any) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isPasswordVisible, setPasswordVisible] = useState(false);
@@ -44,14 +43,9 @@ const LoginScreen = ({ navigation }: any) => {
 
     return (
         <View style={styles.safeArea}>
-            <CommonHeader
-                backGroundColor={COLORS.SHADE_WHITE}
-                roundedIconBGColor={COLORS.PRIMARY_DARK}
-            />
             <View style={styles.container}>
                 <Animated.View style={[styles.logoContainer, { transform: [{ translateY: logoPosition }] }]}> 
                     <Image
-                        source={require('../assets/reversal_logo.png')}
                         style={styles.logo}
                         PlaceholderContent={<Icon name="image" />}
                     />
@@ -176,4 +170,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LoginScreen;
+export {GetStartedIntroPageForWeb};

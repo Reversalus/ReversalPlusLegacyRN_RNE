@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Linking, Animated } from 'react-native';
-import { handleDeepLinkNavigation } from "../../Utils/NavigationUtils.ts";
-import { DeepLinks } from "../../Constants/Deeplinks.ts";
+import { handleDeepLinkNavigation } from "../../../Utils/NavigationUtils.ts";
+import { DeepLinks } from "../../../Constants/Deeplinks.ts";
 
 // Social media links for the "Follow Us" section
 const socialLinks = {
@@ -59,7 +59,7 @@ const IntroScreenWeb = () => {
 
     const handleGetStarted = () => {
         console.log('Navigating to login screen...');
-        handleDeepLinkNavigation.navigate(DeepLinks.LOGIN);
+        handleDeepLinkNavigation.navigate(DeepLinks.GET_STATRED_WEB);
     };
 
     // Open social media links

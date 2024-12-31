@@ -35,6 +35,7 @@ import { setNavigationRef, handleDeepLinkNavigation } from './src/Utils/Navigati
 import IntroScreen from './src/Screens/IntroScreen';
 import LoginScreen from './src/Screens/LoginScreen';
 import MainLanding from "./src/Screens/MainLanding";
+import {GetStartedIntroPageForWeb} from './src/Screens/Web'
 import {ThemeProvider} from "@rneui/themed";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -49,6 +50,7 @@ const linkingConfig = {
             Intro: 'intro',
             Login: 'login',
             Dashboard: 'dashboard',
+            WebIntroPage: 'webintropage'
         },
     },
 };
@@ -123,6 +125,7 @@ const App = () => {
                 <Stack.Screen name="intro" component={IntroScreen} />
                 <Stack.Screen name="login" component={LoginScreen} />
                 <Stack.Screen name="dashboard" component={MainLanding} />
+                <Stack.Screen name="webintropage" component={GetStartedIntroPageForWeb} />
             </Stack.Navigator>
         </NavigationContainer>
     );

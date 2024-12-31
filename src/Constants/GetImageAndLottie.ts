@@ -31,4 +31,4 @@ const LottieUrl = {
 };
 
 // Exporting the full URLs
-export default { ImgUrl, LottieUrl };
+export { ImgUrl, LottieUrl };
