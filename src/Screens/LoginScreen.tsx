@@ -4,6 +4,7 @@ import { Input, Button, Icon, Text, Image } from '@rneui/themed';
 import CommonHeader from '../CommonComponents/CommonHeader';
 import {ScaleSize, handleDeepLinkNavigation} from '../Utils';
 import { COLORS, DeepLinks } from '../Constants';
+import Logo from '../assets';
 
 const LoginScreen = ({ navigation }: any) => {
     const [username, setUsername] = useState('');
@@ -51,7 +52,7 @@ const LoginScreen = ({ navigation }: any) => {
             <View style={styles.container}>
                 <Animated.View style={[styles.logoContainer, { transform: [{ translateY: logoPosition }] }]}> 
                     <Image
-                        source={require('../assets/reversal_logo.png')}
+                        source={require("../assets/reversal_logo.png")}
                         style={styles.logo}
                         PlaceholderContent={<Icon name="image" />}
                     />
