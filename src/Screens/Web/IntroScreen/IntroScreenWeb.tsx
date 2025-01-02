@@ -1,280 +1,206 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Linking, Animated } from 'react-native';
-import { handleDeepLinkNavigation } from "../../../Utils/NavigationUtils.ts";
-import { DeepLinks } from "../../../Constants/Deeplinks.ts";
-
-// Social media links for the "Follow Us" section
-const socialLinks = {
-    whatsapp: 'https://wa.me/your-number', // replace with your number
-    instagram: 'https://instagram.com/your-profile', // replace with your profile
-    twitter: 'https://twitter.com/your-profile', // replace with your profile
-    facebook: 'https://facebook.com/your-profile', // replace with your profile
-};
+import React from 'react';
+import { StyleSheet, View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 
 const IntroScreenWeb = () => {
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const [fadeAnim] = useState(new Animated.Value(0)); // Animation for fade effect
-
-    // Data for Carousel slides
-    const slides = [
-        {
-            title: 'What is Diabetes Reversal?',
-            description: 'Diabetes reversal (remission) means achieving an HbA1c level less than 6.5% without medication.',
-            icon: '🔬', // Icon for the slide
-        },
-        {
-            title: 'Can Everyone Reverse Their Diabetes?',
-            description: 'With focused effort and the right mindset, many can reduce or eliminate their need for diabetes medication.',
-            icon: '💪', // Icon for the slide
-        },
-        {
-            title: 'Fitterfly Reversal Test',
-            description: 'Take the Fitterfly test to assess your chances of diabetes reversal based on health parameters.',
-            icon: '📊', // Icon for the slide
-        },
-    ];
-
-    // Auto-change slide every 5 seconds
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-        }, 5000);
-
-        return () => clearInterval(interval); // Cleanup interval on component unmount
-    }, []);
-
-    // Trigger animation when the slide changes
-    const animateSlideChange = () => {
-        Animated.timing(fadeAnim, {
-            toValue: 1,
-            duration: 500,
-            useNativeDriver: true,
-        }).start(() => {
-            setTimeout(() => {
-                setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-                fadeAnim.setValue(0); // Reset animation value
-            }, 400);
-        });
-    };
-
-    const handleGetStarted = () => {
-        console.log('Navigating to login screen...');
-        handleDeepLinkNavigation.navigate(DeepLinks.GET_STATRED_WEB);
-    };
-
-    // Open social media links
-    const openSocialLink = (url: string) => {
-        Linking.openURL(url);
-    };
-
-    return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.headerTitle}>HealthCare Reversal</Text>
-                <View style={styles.socialIcons}>
-                    <TouchableOpacity onPress={() => openSocialLink(socialLinks.whatsapp)}>
-                        <Text style={styles.icon}>📱</Text> {/* Replace with WhatsApp icon */}
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => openSocialLink(socialLinks.instagram)}>
-                        <Text style={styles.icon}>📷</Text> {/* Replace with Instagram icon */}
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => openSocialLink(socialLinks.twitter)}>
-                        <Text style={styles.icon}>🐦</Text> {/* Replace with Twitter icon */}
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => openSocialLink(socialLinks.facebook)}>
-                        <Text style={styles.icon}>📘</Text> {/* Replace with Facebook icon */}
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-            <View style={styles.carouselContainer}>
-                <Text style={styles.carouselTitle}>Introduction to HealthCare Reversal</Text>
-
-                {/* Animated Carousel with Card */}
-                <Animated.View style={[styles.carouselCard, { opacity: fadeAnim }]}>
-                    <Text style={styles.slideIcon}>{slides[currentSlide].icon}</Text>
-                    <Text style={styles.slideTitle}>{slides[currentSlide].title}</Text>
-                    <Text style={styles.slideDescription}>{slides[currentSlide].description}</Text>
-                </Animated.View>
-
-                {/* Carousel Controls */}
-                <View style={styles.carouselControls}>
-                    <TouchableOpacity
-                        onPress={() => animateSlideChange()}
-                        style={styles.carouselButton}>
-                        <Text style={styles.carouselButtonText}>Next</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-            {/* More details about Diabetes Reversal */}
-            <View style={styles.content}>
-                <Text style={styles.sectionTitle}>What is Diabetes Reversal?</Text>
-                <Text style={styles.sectionDescription}>
-                    For a person with diabetes, diabetes reversal (scientifically known as diabetes remission) is defined as having their HbA1c less than 6.5% (i.e. in the prediabetes stage) without any medications and/or insulin for more than 6 months.
-                </Text>
-
-                <Text style={styles.sectionTitle}>Can Everyone Reverse Their Diabetes?</Text>
-                <Text style={styles.sectionDescription}>
-                    Whether you’ve been taking diabetes medicines for a while now or have just been diagnosed, reducing or avoiding medicines may be a goal which you’ve set for yourself.
-                    Yes, it is possible with some focused efforts and the right mindset.
-                    A better understanding of the science behind diabetes reversal coupled with personalized therapies and expert coaching can help achieve these goals.
-                </Text>
-
-                <Text style={styles.sectionDescription}>
-                    This questionnaire has been designed by top doctors and experts to find what would be possible for you in terms of diabetes reversal. What’s more important is that you’ll be able to reduce the symptoms, the risk of complications, your medical costs and more.
-                </Text>
-
-                <Text style={styles.sectionTitle}>To know your chances of Diabetes Reversal, take the Fitterfly Reversal Test</Text>
-                <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
-                    <Text style={styles.buttonText}>CHECK NOW</Text>
-                </TouchableOpacity>
-
-                <Text style={styles.sectionTitle}>About the Fitterfly Reversal Test</Text>
-                <Text style={styles.sectionDescription}>
-                    Designed by the diabetes management experts at Fitterfly, the calculator assesses your chance of reversing diabetes by taking into consideration your age, gender, BMI, duration of diabetes, current medication, family history of diabetes and other health conditions. The higher the score is, the better your chances of reversal.
-                </Text>
-
-                {/* Placeholder for other conditions */}
-                <Text style={styles.sectionTitle}>Reversal for Other Conditions</Text>
-                <Text style={styles.sectionDescription}>
-                    Besides diabetes, this platform offers solutions for reversal of various other chronic conditions including:
-                </Text>
-                <Text style={styles.sectionDescription}>- Thyroid Reversal</Text>
-                <Text style={styles.sectionDescription}>- Blood Pressure (BP) Reversal</Text>
-                <Text style={styles.sectionDescription}>- Cardiac Reversal</Text>
-                <Text style={styles.sectionDescription}>- Super Reversal (General Wellness)</Text>
-
-                {/* Get Started Button */}
-                <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
-                    <Text style={styles.buttonText}>Get Started</Text>
-                </TouchableOpacity>
-            </View>
+  return (
+    <ScrollView style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <View style={styles.topBar}>
+          <View style={styles.leftLinks}>
+            <Text style={styles.link}>About</Text>
+            <Text style={styles.link}>Doctors</Text>
+            <Text style={styles.link}>Contact</Text>
+            <Text style={styles.link}>FAQ</Text>
+          </View>
+          <View style={styles.rightContacts}>
+            <Text style={styles.contact}>
+              <Text style={styles.icon}>📞</Text> +880 1234 56789
+            </Text>
+            <Text style={styles.contact}>
+              <Text style={styles.icon}>📧</Text> support@yourmail.com
+            </Text>
+          </View>
         </View>
-    );
+        <View style={styles.headerInner}>
+          <Image source={{ uri: 'img/logo.png' }} style={styles.logo} />
+          <View style={styles.nav}>
+            <Text style={styles.navItem}>Home</Text>
+            <Text style={styles.navItem}>Doctors</Text>
+            <Text style={styles.navItem}>Services</Text>
+            <Text style={styles.navItem}>Contact Us</Text>
+          </View>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Book Appointment</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* Slider */}
+      <View style={styles.slider}>
+        <Image source={{ uri: 'img/slider2.jpg' }} style={styles.sliderImage} />
+        <View style={styles.sliderText}>
+          <Text style={styles.sliderTitle}>
+            We Provide <Text style={styles.highlight}>Medical</Text> Services That You Can <Text style={styles.highlight}>Trust!</Text>
+          </Text>
+          <Text style={styles.sliderDescription}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl pellentesque, faucibus libero eu, gravida quam.
+          </Text>
+          <View style={styles.sliderButtons}>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Get Appointment</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonSecondary}>
+              <Text style={styles.buttonSecondaryText}>Learn More</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+
+      {/* Features Section */}
+      <View style={styles.featuresSection}>
+        <Text style={styles.sectionTitle}>We Are Always Ready to Help You & Your Family</Text>
+        <View style={styles.features}>
+          <View style={styles.feature}>
+            <Text style={styles.featureIcon}>🚑</Text>
+            <Text style={styles.featureTitle}>Emergency Help</Text>
+            <Text style={styles.featureDescription}>
+              Lorem ipsum sit, consectetur adipiscing elit. Maecenas mi quam vulputate.
+            </Text>
+          </View>
+          <View style={styles.feature}>
+            <Text style={styles.featureIcon}>💊</Text>
+            <Text style={styles.featureTitle}>Enriched Pharmacy</Text>
+            <Text style={styles.featureDescription}>
+              Lorem ipsum sit, consectetur adipiscing elit. Maecenas mi quam vulputate.
+            </Text>
+          </View>
+          <View style={styles.feature}>
+            <Text style={styles.featureIcon}>🩺</Text>
+            <Text style={styles.featureTitle}>Medical Treatment</Text>
+            <Text style={styles.featureDescription}>
+              Lorem ipsum sit, consectetur adipiscing elit. Maecenas mi quam vulputate.
+            </Text>
+          </View>
+        </View>
+      </View>
+
+      {/* Footer */}
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>
+          © Copyright 2018 | All Rights Reserved by{' '}
+          <Text style={styles.footerLink}>wpthemesgrid.com</Text>
+        </Text>
+      </View>
+    </ScrollView>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        backgroundColor: '#f8f9fa',
-        padding: 16,
-    },
-    header: {
-        width: '100%',
-        padding: 16,
-        backgroundColor: '#007BFF',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-    },
-    headerTitle: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#fff',
-    },
-    socialIcons: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-    },
-    icon: {
-        fontSize: 24,
-        marginHorizontal: 8,
-        color: '#fff',
-    },
-    carouselContainer: {
-        width: '100%',
-        padding: 16,
-        backgroundColor: '#fff',
-        borderRadius: 8,
-        marginVertical: 16,
-        elevation: 5,
-    },
-    carouselTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#007BFF',
-        marginBottom: 8,
-        textAlign: 'center',
-    },
-    carouselCard: {
-        alignItems: 'center',
-        padding: 24,
-        backgroundColor: '#fff',
-        borderRadius: 8,
-        shadowColor: '#000',
-        shadowOpacity: 0.1,
-        shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 4,
-        elevation: 5,
-        marginBottom: 16,
-    },
-    slideIcon: {
-        fontSize: 48,
-        marginBottom: 16,
-    },
-    slideTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#007BFF',
-        marginBottom: 8,
-    },
-    slideDescription: {
-        fontSize: 16,
-        color: '#555',
-        textAlign: 'center',
-        lineHeight: 24,
-    },
-    carouselControls: {
-        alignItems: 'center',
-    },
-    carouselButton: {
-        backgroundColor: '#007BFF',
-        paddingVertical: 10,
-        paddingHorizontal: 24,
-        borderRadius: 4,
-        marginTop: 16,
-    },
-    carouselButtonText: {
-        color: '#fff',
-        fontWeight: 'bold',
-    },
-    content: {
-        width: '100%',
-        padding: 16,
-        backgroundColor: '#fff',
-        borderRadius: 8,
-        marginTop: 16,
-        elevation: 5,
-    },
-    sectionTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#007BFF',
-        marginBottom: 8,
-    },
-    sectionDescription: {
-        fontSize: 16,
-        color: '#555',
-        marginBottom: 16,
-        lineHeight: 24,
-    },
-    button: {
-        backgroundColor: '#007BFF',
-        paddingVertical: 12,
-        paddingHorizontal: 24,
-        borderRadius: 4,
-        marginTop: 16,
-    },
-    buttonText: {
-        fontSize: 16,
-        color: '#fff',
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  header: {
+    backgroundColor: '#f5f5f5',
+    padding: 10,
+  },
+  topBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  leftLinks: {
+    flexDirection: 'row',
+  },
+  link: {
+    marginHorizontal: 5,
+    color: '#007bff',
+  },
+  rightContacts: {
+    flexDirection: 'row',
+  },
+  contact: {
+    marginHorizontal: 5,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  headerInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  logo: {
+    width: 100,
+    height: 50,
+  },
+  nav: {
+    flexDirection: 'row',
+  },
+  navItem: {
+    marginHorizontal: 10,
+  },
+  button: {
+    backgroundColor: '#007bff',
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: '#fff',
+  },
+  slider: {
+    position: 'relative',
+  },
+  sliderImage: {
+    width: '100%',
+    height: 200,
+  },
+  sliderText: {
+    position: 'absolute',
+    top: 50,
+    left: 20,
+  },
+  sliderTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  highlight: {
+    color: '#007bff',
+  },
+  featuresSection: {
+    padding: 20,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    textAlign: 'center',
+  },
+  features: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  feature: {
+    flex: 1,
+    alignItems: 'center',
+    marginHorizontal: 10,
+  },
+  featureIcon: {
+    fontSize: 40,
+  },
+  featureTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  footer: {
+    backgroundColor: '#333',
+    padding: 10,
+  },
+  footerText: {
+    color: '#fff',
+    textAlign: 'center',
+  },
+  footerLink: {
+    color: '#007bff',
+  },
 });
 
 export default IntroScreenWeb;

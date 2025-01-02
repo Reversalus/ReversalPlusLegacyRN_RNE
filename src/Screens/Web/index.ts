@@ -1,1 +1,1 @@
-export {GetStartedIntroPageForWeb} from './GetStartedWeb/GetStartedIntroPageForWeb'
+export {GetStartedIntroModalWeb} from './GetStartedWeb/GetStartedIntroPageForWeb'
