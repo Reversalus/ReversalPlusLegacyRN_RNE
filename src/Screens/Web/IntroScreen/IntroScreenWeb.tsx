@@ -1,206 +1,274 @@
-import React from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  ScrollView,
+  View,
+  Text,
+  StyleSheet,
+  Image,
+} from 'react-native';
+import { Button, Card, SearchBar, Header } from '@rneui/themed';
+import { COLORS } from "../../../Constants";
 
-const IntroScreenWeb = () => {
+const InfoItem = ({ iconUri, text }) => (
+    <View style={styles.infoItem}>
+      <Image source={{ uri: iconUri }} style={styles.icon} />
+      <Text style={styles.infoText}>{text}</Text>
+    </View>
+);
+
+const NavButton = ({ title, onPress }) => (
+    <Button
+        title={title}
+        type="clear"
+        titleStyle={styles.navItem}
+        onPress={onPress}
+        color="#fff"
+    />
+);
+
+const CustomHeader = ({ scrollToSection, sliderRef, testimonialRef, contactRef }) => {
+  const [search, setSearch] = useState("");
+
   return (
-    <ScrollView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.topBar}>
-          <View style={styles.leftLinks}>
-            <Text style={styles.link}>About</Text>
-            <Text style={styles.link}>Doctors</Text>
-            <Text style={styles.link}>Contact</Text>
-            <Text style={styles.link}>FAQ</Text>
-          </View>
-          <View style={styles.rightContacts}>
-            <Text style={styles.contact}>
-              <Text style={styles.icon}>📞</Text> +880 1234 56789
-            </Text>
-            <Text style={styles.contact}>
-              <Text style={styles.icon}>📧</Text> support@yourmail.com
-            </Text>
-          </View>
-        </View>
-        <View style={styles.headerInner}>
-          <Image source={{ uri: 'img/logo.png' }} style={styles.logo} />
-          <View style={styles.nav}>
-            <Text style={styles.navItem}>Home</Text>
-            <Text style={styles.navItem}>Doctors</Text>
-            <Text style={styles.navItem}>Services</Text>
-            <Text style={styles.navItem}>Contact Us</Text>
-          </View>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Book Appointment</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <View style={styles.stickyHeaderContainer}>
+        {/* Top Bar */}
+        <Header
+            containerStyle={styles.topBar}
+            centerComponent={
+              <View style={styles.topHeader}>
+                <Image
+                    source={{
+                      uri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/reversal_long_logo.png',
+                    }}
+                    style={styles.logo}
+                />
+                <View style={styles.contactInfo}>
+                  {[
+                    {
+                      iconUri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/mail.png',
+                      text: '+91 800 123 456',
+                    },
+                    {
+                      iconUri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/stopwatch.png',
+                      text: 'info@Lifecare.com',
+                    },
+                    {
+                      iconUri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/viber.png',
+                      text: 'Daily: 7:00am - 8:00pm',
+                    },
+                  ].map((item, index) => (
+                      <InfoItem key={index} iconUri={item.iconUri} text={item.text} />
+                  ))}
+                </View>
+              </View>
+            }
+        />
 
-      {/* Slider */}
-      <View style={styles.slider}>
-        <Image source={{ uri: 'img/slider2.jpg' }} style={styles.sliderImage} />
-        <View style={styles.sliderText}>
-          <Text style={styles.sliderTitle}>
-            We Provide <Text style={styles.highlight}>Medical</Text> Services That You Can <Text style={styles.highlight}>Trust!</Text>
-          </Text>
-          <Text style={styles.sliderDescription}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl pellentesque, faucibus libero eu, gravida quam.
-          </Text>
-          <View style={styles.sliderButtons}>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Get Appointment</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonSecondary}>
-              <Text style={styles.buttonSecondaryText}>Learn More</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        {/* Navigation Bar */}
+        <Header
+            containerStyle={styles.navBar}
+            centerComponent={
+              <View style={styles.navLinks}>
+                {[
+                  { title: "Home", action: () => {
+                      window.location.reload()
+                    },
+                    },
+                  { title: "About us", ref: testimonialRef },
+                  { title: "Services", ref: contactRef },
+                ].map((link, index) => (
+                    <NavButton
+                        key={index}
+                        title={link.title}
+                        onPress={link.action || (() => scrollToSection(link.ref))}
+                    />
+                ))}
+                <SearchBar
+                    placeholder="Search here..."
+                    onChangeText={setSearch}
+                    value={search}
+                    containerStyle={styles.searchBar}
+                    inputContainerStyle={styles.inputContainer}
+                    inputStyle={styles.input}
+                    searchIcon={{ type: 'font-awesome', name: 'search', color: COLORS.GREEN, size: 20 }}
+                    placeholderTextColor={COLORS.CHARCOAL_GRAY}
+                />
+              </View>
+            }
+        />
       </View>
+  );
+};
 
-      {/* Features Section */}
-      <View style={styles.featuresSection}>
-        <Text style={styles.sectionTitle}>We Are Always Ready to Help You & Your Family</Text>
-        <View style={styles.features}>
-          <View style={styles.feature}>
-            <Text style={styles.featureIcon}>🚑</Text>
-            <Text style={styles.featureTitle}>Emergency Help</Text>
-            <Text style={styles.featureDescription}>
-              Lorem ipsum sit, consectetur adipiscing elit. Maecenas mi quam vulputate.
-            </Text>
-          </View>
-          <View style={styles.feature}>
-            <Text style={styles.featureIcon}>💊</Text>
-            <Text style={styles.featureTitle}>Enriched Pharmacy</Text>
-            <Text style={styles.featureDescription}>
-              Lorem ipsum sit, consectetur adipiscing elit. Maecenas mi quam vulputate.
-            </Text>
-          </View>
-          <View style={styles.feature}>
-            <Text style={styles.featureIcon}>🩺</Text>
-            <Text style={styles.featureTitle}>Medical Treatment</Text>
-            <Text style={styles.featureDescription}>
-              Lorem ipsum sit, consectetur adipiscing elit. Maecenas mi quam vulputate.
-            </Text>
-          </View>
-        </View>
-      </View>
+const Section = ({ title, children }) => (
+    <View style={styles.section}>
+      <Text style={styles.title}>{title}</Text>
+      {children}
+    </View>
+);
 
-      {/* Footer */}
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          © Copyright 2018 | All Rights Reserved by{' '}
-          <Text style={styles.footerLink}>wpthemesgrid.com</Text>
-        </Text>
-      </View>
-    </ScrollView>
+const TestimonialCard = ({ title, text }) => (
+    <Card>
+      <Card.Title>{title}</Card.Title>
+      <Card.Divider />
+      <Text>{text}</Text>
+    </Card>
+);
+
+const HomePage = () => {
+  const scrollToSection = (ref) => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const sliderRef = useRef(null);
+  const testimonialRef = useRef(null);
+  const contactRef = useRef(null);
+
+  // Ensure the page starts at the top on initial load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+      <>
+        <CustomHeader
+            scrollToSection={scrollToSection}
+            sliderRef={sliderRef}
+            testimonialRef={testimonialRef}
+            contactRef={contactRef}
+        />
+
+        <ScrollView>
+          <View ref={sliderRef}>
+            <Section title="Slider Section">
+              <Image
+                  source={{ uri: 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png' }}
+                  style={styles.sliderImage}
+                  resizeMode="contain"
+              />
+            </Section>
+          </View>
+          <View ref={testimonialRef}>
+            <Section title="Testimonials Section">
+              <View style={styles.testimonialContainer}>
+                {[
+                  { title: "John Doe", text: "This is a fantastic service! I highly recommend it to everyone." },
+                  { title: "Jane Smith", text: "Absolutely loved my experience! The team is very professional." },
+                ].map((testimonial, index) => (
+                    <TestimonialCard key={index} title={testimonial.title} text={testimonial.text} />
+                ))}
+              </View>
+            </Section>
+          </View>
+          <View ref={contactRef}>
+            <Section title="Contact Form Section">
+              <Text>Please fill out the form below:</Text>
+              <Button title="Submit" containerStyle={styles.contactButton} />
+            </Section>
+          </View>
+        </ScrollView>
+      </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  container: { width: '100%' },
+  stickyHeaderContainer: {
+    position: 'sticky',
+    top: 0,
+    zIndex: 1000,
     backgroundColor: '#fff',
   },
-  header: {
-    backgroundColor: '#f5f5f5',
-    padding: 10,
-  },
   topBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
   },
-  leftLinks: {
-    flexDirection: 'row',
-  },
-  link: {
-    marginHorizontal: 5,
-    color: '#007bff',
-  },
-  rightContacts: {
-    flexDirection: 'row',
-  },
-  contact: {
-    marginHorizontal: 5,
-  },
-  icon: {
-    marginRight: 5,
-  },
-  headerInner: {
-    flexDirection: 'row',
+  topHeader: {
     alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  logo: {
-    width: 100,
-    height: 50,
-  },
-  nav: {
     flexDirection: 'row',
-  },
-  navItem: {
-    marginHorizontal: 10,
-  },
-  button: {
-    backgroundColor: '#007bff',
-    padding: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: '#fff',
-  },
-  slider: {
-    position: 'relative',
-  },
-  sliderImage: {
-    width: '100%',
-    height: 200,
-  },
-  sliderText: {
-    position: 'absolute',
-    top: 50,
-    left: 20,
-  },
-  sliderTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  highlight: {
-    color: '#007bff',
-  },
-  featuresSection: {
     padding: 20,
   },
-  sectionTitle: {
-    fontSize: 24,
-    textAlign: 'center',
+  logo: {
+    width: 300,
+    height: 50,
+    resizeMode: 'contain',
   },
-  features: {
+  contactInfo: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
   },
-  feature: {
-    flex: 1,
+  infoItem: {
+    flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 10,
   },
-  featureIcon: {
-    fontSize: 40,
+  icon: {
+    marginHorizontal: 10,
+    width: 45,
+    height: 45,
   },
-  featureTitle: {
+  infoText: {
+    fontSize: 18,
+    color: COLORS.PRIMARY,
+    fontWeight: '500',
+  },
+  navBar: {
+    backgroundColor: COLORS.PRIMARY_DARK_EXTRA,
+    paddingVertical: 10,
+  },
+  navLinks: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  navItem: {
+    color: COLORS.WHITE,
     fontSize: 18,
     fontWeight: 'bold',
   },
-  footer: {
-    backgroundColor: '#333',
-    padding: 10,
+  searchBar: {
+    backgroundColor: 'transparent',
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    marginLeft: 30,
   },
-  footerText: {
-    color: '#fff',
-    textAlign: 'center',
+  inputContainer: {
+    backgroundColor: COLORS.WHITE,
+    borderRadius: 20,
+    height: 40,
+    paddingHorizontal: 10,
   },
-  footerLink: {
-    color: '#007bff',
+  input: {
+    fontSize: 16,
+    color: COLORS.BLUE,
+  },
+  section: {
+    padding: 20,
+    height: '100vh',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  sliderImage: {
+    width: '100%',
+    height: 300,
+  },
+  testimonialContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  contactButton: {
+    marginTop: 10,
   },
 });
 
-export default IntroScreenWeb;
+export default HomePage;
