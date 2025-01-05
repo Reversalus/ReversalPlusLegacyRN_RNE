@@ -4,6 +4,7 @@ import { Button, Card, Text, Divider } from '@rneui/themed';
 import { CustomHeader } from "./CustomHeader.tsx";
 import { SectionProps } from "./type.ts";
 import { Slider } from './Slider.tsx';
+import {AboutUs} from './AboutUs.tsx';
 
 // Get window height and width using Dimensions API
 const { height: windowHeight, width: windowWidth } = Dimensions.get('window');
@@ -65,12 +66,11 @@ const HomePage: React.FC = () => {
           </Section>
         </View>
         <View ref={sections[1]}>
-          <Section title="Testimonials Section">
+          <Section title="">
             <View style={styles.testimonialContainer}>
-              {renderTestimonials()}
+              <AboutUs/>
             </View>
           </Section>
-          <Divider style={styles.divider} />
         </View>
         <View ref={sections[2]}>
           <Section title="Contact Form Section">

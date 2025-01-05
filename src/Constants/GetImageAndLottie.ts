@@ -10,6 +10,7 @@ const ImgUrl = {
     BG_1: BASE_IMAGE_URL+"bg/bg1.jpg",
     BG_2: BASE_IMAGE_URL+"bg/bg2.jpg",
     BG_3: BASE_IMAGE_URL+"bg/bg3.jpg",
+    REVERSAL_LOGO: BASE_IMAGE_URL+ "logo/reversal_logo.png"
 
 };
 
