@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import IntroScreenApp from './IntroScreen/IntroScreenApp.tsx'; // Mobile intro screen
-import IntroScreenWeb from './IntroScreen/IntroScreenWeb.tsx'; // Web intro screen
+import IntroScreenApp from './App/IntroScreen/IntroScreenApp.tsx'; // Mobile intro screen
+import IntroScreenWeb from './Web/IntroScreen/IntroScreenWeb.tsx'; // Web intro screen
 
 const IntroScreen: React.FC = () => {
     if (Platform.OS === 'web') {

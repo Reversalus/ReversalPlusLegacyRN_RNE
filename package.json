@@ -22,6 +22,7 @@
     "react-dom": "18.2.0",
     "react-native": "0.76.5",
     "react-native-gesture-handler": "^2.21.2",
+    "react-native-linear-gradient": "^2.8.3",
     "react-native-ratings": "^8.1.0",
     "react-native-reanimated": "^3.16.6",
     "react-native-safe-area-context": "^5.0.0",
@@ -31,6 +32,7 @@
     "react-native-url-polyfill": "^2.0.0",
     "react-native-vector-icons": "^10.2.0",
     "react-native-web": "^0.19.13",
+    "react-native-web-linear-gradient": "^1.1.2",
     "react-router-dom": "^7.1.1"
   },
   "devDependencies": {

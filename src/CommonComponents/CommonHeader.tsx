@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Header, Icon, Text, Button } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { COLORS } from '../Constants/StylingConstant';
-import ScaleSize from '../Utils/GenericUtils';
+import {ScaleSize} from '../Utils/GenericUtils';
 
 interface CommonHeaderProps {
     title?: string; // Nullable

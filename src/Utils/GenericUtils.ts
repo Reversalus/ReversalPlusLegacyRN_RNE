@@ -17,4 +17,4 @@ const ScaleSize = (size: number) => {
     return size * scale; // Scale value dynamically based on the screen size
 };
 
-export default ScaleSize;
+export {ScaleSize};

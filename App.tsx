@@ -35,8 +35,6 @@ import { setNavigationRef, handleDeepLinkNavigation } from './src/Utils/Navigati
 import IntroScreen from './src/Screens/IntroScreen';
 import LoginScreen from './src/Screens/LoginScreen';
 import MainLanding from "./src/Screens/MainLanding";
-import {ThemeProvider} from "@rneui/themed";
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 // Create a Stack Navigator to manage the app's screens.
 const Stack = createStackNavigator();
@@ -48,7 +46,7 @@ const linkingConfig = {
         screens: {
             Intro: 'intro',
             Login: 'login',
-            Dashboard: 'dashboard',
+            Dashboard: 'dashboard'
         },
     },
 };

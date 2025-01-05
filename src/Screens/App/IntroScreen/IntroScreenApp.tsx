@@ -3,12 +3,9 @@ import { View, StyleSheet, Dimensions, SafeAreaView } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { Button, Text, Icon } from '@rneui/themed';
 import LottieView from 'lottie-react-native';
-import { handleDeepLinkNavigation } from '../../Utils/NavigationUtils.ts';
-import { DeepLinks } from '../../Constants/Deeplinks.ts';
-import { COLORS } from '../../Constants/StylingConstant';
-import ScaleSize from '../../Utils/GenericUtils.ts';
-import assest from '../../Constants/GetImageAndLottie.ts';
-import CommonHeader from '../../CommonComponents/CommonHeader.tsx';
+import {ScaleSize, handleDeepLinkNavigation} from '../../../Utils';
+import {LottieUrl,DeepLinks, COLORS} from '../../../Constants';
+import CommonHeader from '../../../CommonComponents/CommonHeader.tsx';
 
 const { width } = Dimensions.get('window');
 
@@ -19,28 +16,28 @@ const IntroScreenApp = () => {
         {
             title: 'Your Health, Our Priority',
             description: 'We put your well-being first with expert advice and personalized care.',
-            animation: assest.LottieUrl.PREVENTIVE_HEALTH_CARE,
+            animation: LottieUrl.PREVENTIVE_HEALTH_CARE,
         },
         {
             title: 'Track Your Health Journey',
             description: 'Monitor your progress and achieve your wellness goals with ease.',
-            animation: assest.LottieUrl.ANALYSIS_DIGITAL_MARKETING,
+            animation: LottieUrl.ANALYSIS_DIGITAL_MARKETING,
         },
         {
             title: 'Expert Care Anytime, Anywhere',
             description: 'Get advice from certified professionals without stepping outside your door.',
-            animation: assest.LottieUrl.BUSINESS_TEAM,
+            animation: LottieUrl.BUSINESS_TEAM,
         },
         {
             title: 'Get Medicines by Experts Recommendation',
             description: 'Get Medicine from certified professionals without stepping outside your door.',
-            animation: assest.LottieUrl.ONLINE_DELIVERY_SERVICE_1,
+            animation: LottieUrl.ONLINE_DELIVERY_SERVICE_1,
         }
     ];
 
     const handleNavigation = (link: any) => {
         try {
-            handleDeepLinkNavigation.replace(link);
+            handleDeepLinkNavigation.navigate(link);
         } catch (error) {
             console.error('Error handling navigation: ', error);
         }

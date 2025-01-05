@@ -7,6 +7,11 @@ const ImgUrl = {
     DOCTOR_APPOINTMENT: BASE_IMAGE_URL + 'online-doctor-appointment.png',
     FITNESS_APP: BASE_IMAGE_URL + 'fitness-apps.png',
     DOCTOR_CALLUP: BASE_IMAGE_URL + 'doctor-calls-up-intern-for-meeting.png',
+    BG_1: BASE_IMAGE_URL+"bg/bg1.jpg",
+    BG_2: BASE_IMAGE_URL+"bg/bg2.jpg",
+    BG_3: BASE_IMAGE_URL+"bg/bg3.jpg",
+    REVERSAL_LOGO: BASE_IMAGE_URL+ "logo/reversal_logo.png"
+
 };
 
 const LottieUrl = {
@@ -28,7 +33,8 @@ const LottieUrl = {
     TRACKING_ORDER_ONLINE: BASE_LOTTIE_URL + 'Tracking Order Online.json',
     VIRUS_DISINFECTION: BASE_LOTTIE_URL + 'virus-disinfection.json',
     WEBSITE_BUILDING_SHOPPING_SALE: BASE_LOTTIE_URL + 'Website Building of Shopping Sale.json',
+    HEALTH_CARE: BASE_LOTTIE_URL + 'healthcare.json'
 };
 
 // Exporting the full URLs
-export default { ImgUrl, LottieUrl };
+export { ImgUrl, LottieUrl };
