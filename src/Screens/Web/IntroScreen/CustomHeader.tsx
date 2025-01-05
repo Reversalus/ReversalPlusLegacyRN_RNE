@@ -1,28 +1,40 @@
-import React, { useState } from "react";
-import { Image, View, StyleSheet } from "react-native";
-import { Header, SearchBar, Button, Text } from "@rneui/themed";
+import React, { useState, useCallback } from "react";
+import { Image, View, StyleSheet, Dimensions, Pressable } from "react-native";
+import { Header, SearchBar, Text } from "@rneui/themed";
 import { COLORS } from "../../../Constants";
 import { CustomHeaderProps, InfoItemProps, NavButtonProps } from "./type.ts";
 
-/**
- * CustomHeader Component
- * This component comprises a sticky header with navigation and contact information sections.
- * @param {CustomHeaderProps} props - The properties for the custom header.
- */
+// Get device dimensions
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
+
+// CustomHeader Component
 const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection }) => {
     const [search, setSearch] = useState<string>("");
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
     // Navigation Button Component
-    const NavButton: React.FC<NavButtonProps> = ({ title, isActive, onPress }) => (
-        <Button
-            title={title}
-            type="clear"
-            titleStyle={isActive ? styles.activeNavItem : styles.navItem}
-            onPress={onPress}
-        />
-    );
+    const NavButton: React.FC<NavButtonProps> = ({ title, index, isActive }) => {
+        const handlePress = useCallback(() => {
+            onNavigate(index);
+        }, [index, onNavigate]);
 
-    // Info Item Component to display contact information with icons
+        return (
+            <Pressable
+                onPress={handlePress}
+                onPressIn={() => setHoveredIndex(index)}
+                onPressOut={() => setHoveredIndex(null)}
+                style={({ pressed }) => [
+                    styles.navButton,
+                    isActive && styles.activeNavButton,
+                    (hoveredIndex === index || pressed) && styles.hoveredNavButton,
+                ]}
+            >
+                <Text style={styles.navText}>{title}</Text>
+            </Pressable>
+        );
+    };
+
+    // Info Item Component to display contact information
     const InfoItem: React.FC<InfoItemProps> = ({ iconUri, text }) => (
         <View style={styles.infoItem}>
             <Image source={{ uri: iconUri }} style={styles.icon} />
@@ -31,67 +43,59 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection 
     );
 
     // Renders the contact information items
-    const renderContactInfo = () => {
+    const renderContactInfo = useCallback(() => {
         const contactItems = [
-            {
-                iconUri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/mail_new.png',
-                text: '+91 800 123 456',
-            },
-            {
-                iconUri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/clock.png',
-                text: 'info@Lifecare.com',
-            },
-            {
-                iconUri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/telephone.png',
-                text: 'Daily: 7:00am - 8:00pm',
-            }
+            { iconUri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/mail_new.png', text: '+91 800 123 456' },
+            { iconUri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/clock.png', text: 'info@Lifecare.com' },
+            { iconUri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/telephone.png', text: 'Daily: 7:00am - 8:00pm' },
         ];
 
         return contactItems.map((item, index) => (
             <InfoItem key={index} iconUri={item.iconUri} text={item.text} />
         ));
-    };
+    }, []);
 
     // Renders the navigation links
-    const renderNavLinks = () => {
+    const renderNavLinks = useCallback(() => {
         const navItems = [
             { title: "Home", index: 0 },
             { title: "About Us", index: 1 },
             { title: "Services", index: 2 },
+            { title: "Testimonials", index: 3 },
+            { title: "Contact Us", index: 4 },
         ];
 
         return navItems.map((link) => (
             <NavButton
                 key={link.index}
                 title={link.title}
+                index={link.index}
                 isActive={currentSection === link.index}
-                onPress={() => onNavigate(link.index)}
             />
         ));
-    };
+    }, [currentSection]);
 
     return (
         <View style={styles.stickyHeaderContainer}>
             {/* Top Bar with Logo and Contact Information */}
             <Header containerStyle={styles.topBar}
-                    centerComponent={
-                        <View style={styles.topHeader}>
-                            <Image
-                                source={{ uri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/reversal_long_logo.png' }}
-                                style={styles.logo}
-                            />
-                            <View style={styles.contactInfo}>
-                                {renderContactInfo()}
-                            </View>
+                centerComponent={
+                        <View style={styles.contactInfo}>
+                        <Image
+                            source={{ uri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/reversal_long_logo.png' }}
+                            style={styles.logo}
+                        />
+                            {renderContactInfo()}
                         </View>
-                    }
+                }
             />
 
             {/* Navigation Bar with Links and Search Bar */}
             <Header containerStyle={styles.navBar}
-                    centerComponent={
-                        <View style={styles.navLinks}>
-                            {renderNavLinks()}
+                centerComponent={
+                    <View style={styles.navLinks}>
+                        {renderNavLinks()}
+                        <View style={styles.searchContainer}>
                             <SearchBar
                                 placeholder="Search here..."
                                 onChangeText={setSearch}
@@ -103,7 +107,8 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection 
                                 placeholderTextColor={COLORS.CHARCOAL_GRAY}
                             />
                         </View>
-                    }
+                    </View>
+                }
             />
         </View>
     );
@@ -115,67 +120,87 @@ const styles = StyleSheet.create({
         position: 'sticky',
         top: 0,
         zIndex: 1000,
-        backgroundColor: '#fff'
     },
     topBar: {
-        backgroundColor: '#fff',
+        backgroundColor: COLORS.WHITE,
         paddingVertical: 10,
         borderBottomWidth: 1,
-        borderBottomColor: '#ccc'
-    },
-    topHeader: {
-        alignItems: 'center',
-        flexDirection: 'row',
-        padding: 20,
+        borderBottomColor: '#ccc',
     },
     logo: {
-        width: 300,
+        width: SCREEN_WIDTH > 768 ? 300 : 150,
         height: 50,
         resizeMode: 'contain',
+        marginBottom: 10,
     },
-    contactInfo: {
+     contactInfo: {
         flexDirection: 'row',
         alignItems: 'center',
+        flexWrap: 'wrap',
+        justifyContent: 'center', // Center items when wrapping
+        width: '120%', // Ensure it adapts to the available space
     },
     infoItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginHorizontal: 10,
+        marginHorizontal: SCREEN_WIDTH > 768 ? 15 : 5, // Adjust spacing for larger screens
+        marginVertical: 5,
     },
     icon: {
-        marginHorizontal: 10,
-        width: 45,
-        height: 45
+        marginHorizontal: 5,
+        width: SCREEN_WIDTH > 768 ? 40 : 25, // Adjust size for larger screens
+        height: SCREEN_WIDTH > 768 ? 40 : 25,
     },
     infoText: {
-        fontSize: 18,
+        fontSize: SCREEN_WIDTH > 768 ? 18 : 12, // Adjust font size based on screen width
         color: COLORS.PRIMARY,
         fontWeight: '500',
     },
     navBar: {
         backgroundColor: COLORS.PRIMARY_DARK_EXTRA,
-        paddingVertical: 0.2,
+        paddingVertical: 5, 
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 6,
+        elevation: 5,
     },
     navLinks: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-evenly',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
     },
-    navItem: {
+    navButton: {
+        marginHorizontal: 10,
+        padding: 10,
+        borderRadius: 5, // Optional, for better visuals
+    },
+    navText: {
         color: COLORS.WHITE,
-        fontSize: 18,
+        fontSize: SCREEN_WIDTH > 768 ? 18 : 14,
         fontWeight: 'bold',
     },
-    activeNavItem: {
-        color: COLORS.GREEN,
-        fontSize: 18,
-        fontWeight: 'bold',
+    activeNavButton: {
+        borderBottomWidth: 5,
+        borderBottomColor: COLORS.OCEAN_TEAL,
+    },
+    hoveredNavButton: {
+        backgroundColor: COLORS.OCEAN_TEAL, // Change to your desired hover color
+    },
+    searchContainer: {
+        width: 200, 
+        maxWidth: '100%',
+        marginHorizontal: 10,
     },
     searchBar: {
         backgroundColor: 'transparent',
         borderTopWidth: 0,
         borderBottomWidth: 0,
-        marginLeft: 30,
+        flex: 1,
     },
     inputContainer: {
         backgroundColor: COLORS.WHITE,
@@ -184,9 +209,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     input: {
-        fontSize: 16,
+        fontSize: SCREEN_WIDTH > 768 ? 16 : 14,
         color: COLORS.BLUE,
-    }
+    },
 });
 
 export { CustomHeader };

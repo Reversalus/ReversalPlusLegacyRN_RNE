@@ -1,20 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  ScrollView,
-  Image,
-    View
-} from 'react-native';
-import { Button, Card, SearchBar, Header, Text } from '@rneui/themed';
-import { COLORS } from "../../../Constants";
-import {CustomHeader} from "./CustomHeader.tsx";
-import {SectionProps} from "./type.ts";
+import { ScrollView, View, StyleSheet, Dimensions } from 'react-native';
+import { Button, Card, Text, Divider } from '@rneui/themed';
+import { CustomHeader } from "./CustomHeader.tsx";
+import { SectionProps } from "./type.ts";
+import { Slider } from './Slider.tsx';
 
+// Get window height and width using Dimensions API
+const { height: windowHeight, width: windowWidth } = Dimensions.get('window');
 
+// Section Component
 const Section: React.FC<SectionProps> = ({ title, children }) => (
-    <View style={styles.section}>
-      <Text h4>{title}</Text>
-      {children}
-    </View>
+  <View style={[styles.section, { height: windowHeight * 0.75 }]}>
+    <Text h4>{title}</Text>
+    {children}
+  </View>
 );
 
 // Define types for TestimonialCard props
@@ -25,18 +24,18 @@ interface TestimonialCardProps {
 
 // Testimonial card component
 const TestimonialCard: React.FC<TestimonialCardProps> = ({ title, text }) => (
-    <Card>
-      <Card.Title>{title}</Card.Title>
-      <Card.Divider />
-      <Text>{text}</Text>
-    </Card>
+  <Card>
+    <Card.Title>{title}</Card.Title>
+    <Card.Divider />
+    <Text>{text}</Text>
+  </Card>
 );
 
 // Main Home Page component
 const HomePage: React.FC = () => {
   const [currentSection, setCurrentSection] = useState<number>(0);
   const scrollViewRef = useRef<ScrollView | null>(null);
-  const sections = [useRef<View | null>(null), useRef<View | null>(null), useRef<View | null>(null)];
+  const sections = [useRef<View | null>(null), useRef<View | null>(null), useRef<View | null>(null), useRef<View | null>(null), useRef<View | null>(null)];
 
   useEffect(() => {
     if (scrollViewRef.current && sections[currentSection].current) {
@@ -57,45 +56,43 @@ const HomePage: React.FC = () => {
     }
   };
 
-  return (
-      <>
-        <CustomHeader onNavigate={handleNavigation} currentSection={currentSection} />
-        <ScrollView
-            ref={scrollViewRef}
-            onScroll={handleScroll}
-            scrollEventThrottle={16}
-        >
-          {renderSections()}
-        </ScrollView>
-      </>
-  );
-
   function renderSections() {
     return (
-        <>
-          <View ref={sections[0]}>
-            <Section title="Slider Section">
-              <Image
-                  source={{ uri: 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png' }}
-                  style={styles.sliderImage}
-                  resizeMode="contain"
-              />
-            </Section>
-          </View>
-          <View ref={sections[1]}>
-            <Section title="Testimonials Section">
-              <View style={styles.testimonialContainer}>
-                {renderTestimonials()}
-              </View>
-            </Section>
-          </View>
-          <View ref={sections[2]}>
-            <Section title="Contact Form Section">
-              <Text>Please fill out the form below:</Text>
-              <Button title="Submit" containerStyle={styles.contactButton} />
-            </Section>
-          </View>
-        </>
+      <>
+        <View ref={sections[0]}>
+          <Section title="">
+            <Slider />
+          </Section>
+        </View>
+        <View ref={sections[1]}>
+          <Section title="Testimonials Section">
+            <View style={styles.testimonialContainer}>
+              {renderTestimonials()}
+            </View>
+          </Section>
+          <Divider style={styles.divider} />
+        </View>
+        <View ref={sections[2]}>
+          <Section title="Contact Form Section">
+            <Text>Please fill out the form below:</Text>
+            <Button title="Submit" containerStyle={styles.contactButton} />
+          </Section>
+          <Divider style={styles.divider} />
+        </View>
+        <View ref={sections[3]}>
+          <Section title="Contact Form Section">
+            <Text>Please fill out the form below:</Text>
+            <Button title="Submit" containerStyle={styles.contactButton} />
+          </Section>
+          <Divider style={styles.divider} />
+        </View>
+        <View ref={sections[4]}>
+          <Section title="Contact Form Section">
+            <Text>Please fill out the form below:</Text>
+            <Button title="Submit" containerStyle={styles.contactButton} />
+          </Section>
+        </View>
+      </>
     );
   }
 
@@ -106,96 +103,34 @@ const HomePage: React.FC = () => {
     ];
 
     return testimonials.map((testimonial, index) => (
-        <TestimonialCard key={index} title={testimonial.title} text={testimonial.text} />
+      <TestimonialCard key={index} title={testimonial.title} text={testimonial.text} />
     ));
   }
+  
+  return (
+    <>
+      <CustomHeader onNavigate={handleNavigation} currentSection={currentSection} />
+      <ScrollView
+        ref={scrollViewRef}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        style={styles.scrollView}
+      >
+        {renderSections()}
+      </ScrollView>
+    </>
+  );
 };
 
 // Styles
-const styles = {
-  stickyHeaderContainer: {
-    position: 'sticky',
-    top: 0,
-    zIndex: 1000,
-    backgroundColor: '#fff'
-  },
-  topBar: {
-    backgroundColor: '#fff',
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc'
-  },
-  topHeader: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    padding: 20,
-  },
-  logo: {
-    width: 300,
-    height: 50,
-    resizeMode: 'contain',
-  },
-  contactInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  infoItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: 10,
-  },
-  icon: {
-    marginHorizontal: 10,
-    width: 45,
-    height: 45
-  },
-  infoText: {
-    fontSize: 18,
-    color: COLORS.PRIMARY,
-    fontWeight: '500',
-  },
-  navBar: {
-    backgroundColor: COLORS.PRIMARY_DARK_EXTRA,
-    paddingVertical: 0.2,
-  },
-  navLinks: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-  },
-  navItem: {
-    color: COLORS.WHITE,
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  activeNavItem: {
-    color: COLORS.GREEN,
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  searchBar: {
-    backgroundColor: 'transparent',
-    borderTopWidth: 0,
-    borderBottomWidth: 0,
-    marginLeft: 30,
-  },
-  inputContainer: {
-    backgroundColor: COLORS.WHITE,
-    borderRadius: 20,
-    height: 40,
-    paddingHorizontal: 10,
-  },
-  input: {
-    fontSize: 16,
-    color: COLORS.BLUE,
+const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
   },
   section: {
-    padding: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: '100%',
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    height: 800, // Consider making this dynamic if needed
   },
   testimonialContainer: {
     flexDirection: 'column',
@@ -204,10 +139,17 @@ const styles = {
   contactButton: {
     marginTop: 10,
   },
-  sliderImage: {
-    width: '100%',
-    height: 300,
+  divider: {
+    height: 1,
+    marginVertical: 15,
+    backgroundColor: '#ddd',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 5, // For Android shadow
+    borderRadius: 10, // Optional, to give rounded corners for the divider
   },
-};
+});
 
 export default HomePage;
