@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     margin: '3%',
     borderRadius: 25,
     elevation: 10,
-    padding: '4%'
+    padding: '3%'
   },
   logoContainer: {
     alignItems: 'center',
@@ -114,9 +114,10 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: COLORS.PRIMARY_DARK_EXTRA,
-    borderRadius: 5,
+    borderRadius: 25,
     paddingHorizontal: 20,
     paddingVertical: 10,
+    width: '40%'
   },
   buttonTitle: {
     fontSize: 16,

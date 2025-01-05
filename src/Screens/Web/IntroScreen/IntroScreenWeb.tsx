@@ -77,14 +77,12 @@ const HomePage: React.FC = () => {
             <Text>Please fill out the form below:</Text>
             <Button title="Submit" containerStyle={styles.contactButton} />
           </Section>
-          <Divider style={styles.divider} />
         </View>
         <View ref={sections[3]}>
           <Section title="Contact Form Section">
             <Text>Please fill out the form below:</Text>
             <Button title="Submit" containerStyle={styles.contactButton} />
           </Section>
-          <Divider style={styles.divider} />
         </View>
         <View ref={sections[4]}>
           <Section title="Contact Form Section">
