@@ -9,8 +9,8 @@ const { width } = Dimensions.get('window');
 
 const sentences = [
   "Welcome to Reversal+",
-  "Fuck off",
   "We care about your health",
+  "Plan Your LifeStyle With us"
 ];
 
 const icons = ['ambulance', 'clock-o', 'hospital-o'];

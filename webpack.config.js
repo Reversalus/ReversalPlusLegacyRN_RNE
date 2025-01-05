@@ -10,6 +10,7 @@ const compileNodeModules = [
     "react-native-swiper",
     "react-native-ratings",
     "react-native-vector-icons",
+    "react-native-web-linear-gradient"
 ].map((moduleName) => path.resolve(appDirectory, `node_modules/${moduleName}`));
 
 // Babel Loader Configuration

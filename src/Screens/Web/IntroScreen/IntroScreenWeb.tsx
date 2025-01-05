@@ -5,7 +5,10 @@ import { CustomHeader } from "./CustomHeader.tsx";
 import { SectionProps } from "./type.ts";
 import { Slider } from './Slider.tsx';
 import {AboutUs} from './AboutUs.tsx';
-
+import {Services} from './Services.tsx'
+import {Testimonial} from './Testimonial.tsx'
+import { ContactUs } from './ContactUs.tsx';
+import { Footer } from './Footer.tsx';
 // Get window height and width using Dimensions API
 const { height: windowHeight, width: windowWidth } = Dimensions.get('window');
 
@@ -73,21 +76,23 @@ const HomePage: React.FC = () => {
           </Section>
         </View>
         <View ref={sections[2]}>
-          <Section title="Contact Form Section">
-            <Text>Please fill out the form below:</Text>
-            <Button title="Submit" containerStyle={styles.contactButton} />
+          <Section title="">
+            <Services />
           </Section>
         </View>
         <View ref={sections[3]}>
-          <Section title="Contact Form Section">
-            <Text>Please fill out the form below:</Text>
-            <Button title="Submit" containerStyle={styles.contactButton} />
+          <Section title="">
+            <Testimonial />
           </Section>
         </View>
         <View ref={sections[4]}>
-          <Section title="Contact Form Section">
-            <Text>Please fill out the form below:</Text>
-            <Button title="Submit" containerStyle={styles.contactButton} />
+          <Section title="">
+            <ContactUs />
+          </Section>
+        </View>
+        <View ref={sections[5]}>
+          <Section title="">
+            <Footer />
           </Section>
         </View>
       </>
