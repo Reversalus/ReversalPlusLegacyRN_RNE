@@ -1,10 +1,9 @@
 [build]
-  command = "yarn install && yarn build"  # Keep the simplified build command
-  publish = "build"  # Make sure the output folder is correct
+  command = "gem update --system 3.3.22 && gem install bundler && yarn install && yarn build"
+  publish = "build"  # The folder to be published after build
 
 [build.environment]
-  NODE_VERSION = "18"  # Enforce Node.js version 18 (or adjust to your preferred version)
-  YARN_VERSION = "1.x"  # Ensure Yarn version 1.x is used, if applicable
-
-  # Optional: Add any other environment variables you may need here
-  # Example: REACT_APP_API_URL = "https://your-api-url"
+  RUBY_VERSION = "2.7.2"  # Set the Ruby version you need
+  RUBYGEMS_VERSION = "3.3.22"  # Set the required RubyGems version
+  NODE_VERSION = "18"  # Optional: specify Node.js version
+  YARN_VERSION = "1.x"  # Optional: specify Yarn version
