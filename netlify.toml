@@ -3,7 +3,7 @@
   publish = "build"  # Folder to be published
 
 [build.environment]
-  RUBY_VERSION = "2.7.2"  # Ruby version
+  RUBY_VERSION = "3.6.2"  # Ruby version
   RUBYGEMS_VERSION = "3.3.22"  # RubyGems version
-  NODE_VERSION = "18"  # Node.js version
-  YARN_VERSION = "1.x"  # Yarn version
+  NODE_VERSION = "20.18.1"  # Node.js version
+  YARN_VERSION = "1.22.22"  # Yarn version
