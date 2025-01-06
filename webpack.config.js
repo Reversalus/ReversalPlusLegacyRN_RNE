@@ -98,6 +98,18 @@ module.exports = {
             __DEV__: JSON.stringify(true), // Allows differentiation of dev vs prod
         }),
     ],
+    // performance: {
+    //     hints: false, // Disable performance warnings
+    //     maxAssetSize: 512000, // (Optional) Increase the asset size limit (in bytes)
+    //     maxEntrypointSize: 512000, // (Optional) Increase the entrypoint size limit (in bytes)
+    // },
+    performance: process.env.NODE_ENV === 'development' ? {
+        hints: 'warning', // Show warnings in development
+        maxAssetSize: 244000, // Adjust the size limit for warnings
+        maxEntrypointSize: 244000, // Adjust the entrypoint size limit for warnings
+    } : {
+        hints: false, // Suppress warnings in production
+    },
     devServer: {
         historyApiFallback: true, // Ensures SPA routes work correctly
         static: {

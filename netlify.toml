@@ -1,7 +1,7 @@
 [build]
-  command = "gem update --system 3.3.22 && gem install bundler && bundle install && npm run build"
-  publish = "build"  # Adjust this if your React Native app has a different build output directory
+  command = "yarn install && yarn build"  # Install dependencies and build the app using Yarn
+  publish = "build"  # The folder where the built app is located, typically 'build'
 
 [build.environment]
-  RUBY_VERSION = "2.7.2"  # Set the Ruby version to be used in the Netlify build environment
-  RUBYGEMS_VERSION = "3.3.22"  # Make sure to set RubyGems version to 3.3.22
+  NODE_ENV = "production"  # Ensure you're in production mode for optimization
+

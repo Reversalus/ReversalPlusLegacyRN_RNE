@@ -2,13 +2,15 @@
   "name": "NewRNproject",
   "version": "0.0.1",
   "private": true,
+  "sideEffects": false,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "web": "webpack serve --mode=development --config webpack.config.js"
+    "web": "webpack serve --mode=development --config webpack.config.js",
+    "build": "webpack serve --mode=production --config webpack.config.js"
   },
   "dependencies": {
     "@lottiefiles/dotlottie-react": "^0.12.0",
