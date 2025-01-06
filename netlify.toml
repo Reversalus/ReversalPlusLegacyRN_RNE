@@ -1,7 +1,10 @@
 [build]
-  command = "yarn install && yarn build"  # Install dependencies and build the app using Yarn
-  publish = "build"  # The folder where the built app is located, typically 'build'
+  command = "yarn install && yarn build"  # Keep the simplified build command
+  publish = "build"  # Make sure the output folder is correct
 
 [build.environment]
-  NODE_ENV = "production"  # Ensure you're in production mode for optimization
+  NODE_VERSION = "18"  # Enforce Node.js version 18 (or adjust to your preferred version)
+  YARN_VERSION = "1.x"  # Ensure Yarn version 1.x is used, if applicable
 
+  # Optional: Add any other environment variables you may need here
+  # Example: REACT_APP_API_URL = "https://your-api-url"
