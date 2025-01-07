@@ -1,23 +1,27 @@
 import React, { useState, useCallback } from "react";
-import { Image, View, StyleSheet, Dimensions, Pressable } from "react-native";
-import { Header, SearchBar, Text, Button, Icon } from "@rneui/themed";
+import { Image, View, StyleSheet, Pressable } from "react-native";
+import { Header, SearchBar, Text, Button } from "@rneui/themed";
 import { COLORS } from "../../../Constants";
 import { CustomHeaderProps, InfoItemProps, NavButtonProps } from "./type.ts";
 import { GetStartedIntroModalWeb } from '../../Web';
-// Get device dimensions
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
+import useResponsiveDimensions from "../../../Hooks/useResponsiveDimensions";
 
-// CustomHeader Component
 const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection }) => {
     const [search, setSearch] = useState<string>("");
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
     const [isModalVisible, setModalVisible] = useState(false);
+    const { getResponsiveFontSize, getResponsiveWidth, getResponsiveHeight, getResponsiveDimension } = useResponsiveDimensions();
 
     const openModal = () => setModalVisible(true);
     const closeModal = () => setModalVisible(false);
 
-    // Navigation Button Component
+    const styles = generateStyles({
+        getResponsiveFontSize,
+        getResponsiveWidth,
+        getResponsiveHeight,
+        getResponsiveDimension
+    });
+
     const NavButton: React.FC<NavButtonProps> = ({ title, index, isActive }) => {
         const handlePress = useCallback(() => {
             onNavigate(index);
@@ -39,7 +43,6 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection 
         );
     };
 
-    // Info Item Component to display contact information
     const InfoItem: React.FC<InfoItemProps> = ({ iconUri, text }) => (
         <View style={styles.infoItem}>
             <Image source={{ uri: iconUri }} style={styles.icon} />
@@ -47,7 +50,6 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection 
         </View>
     );
 
-    // Renders the contact information items
     const renderContactInfo = useCallback(() => {
         const contactItems = [
             { iconUri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/mail_new.png', text: '+91 800 123 456' },
@@ -60,7 +62,6 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection 
         ));
     }, []);
 
-    // Renders the navigation links
     const renderNavLinks = useCallback(() => {
         const navItems = [
             { title: "Home", index: 0 },
@@ -82,160 +83,159 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection 
 
     return (
         <View style={styles.stickyHeaderContainer}>
-            {/* Top Bar with Logo and Contact Information */}
-            <Header containerStyle={styles.topBar}
-                centerComponent={
-                    <View style={styles.contactInfo}>
-                        <Image
-                            source={{ uri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/reversal_long_logo.png' }}
-                            style={styles.logo}
+            {/* First Row: Logo and Contact Info */}
+            <View style={styles.topBar}>
+                <View style={styles.contactInfo}>
+                    <Image
+                        source={{ uri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/reversal_long_logo.png' }}
+                        style={styles.logo}
+                    />
+                    {renderContactInfo()}
+                </View>
+            </View>
+
+            {/* Second Row: Navigation Links, Search Bar, and Get Started Button */}
+            <View style={styles.navBar}>
+                <View style={styles.navLinks}>
+                    {renderNavLinks()}
+                    <View style={styles.searchContainer}>
+                        <SearchBar
+                            placeholder="Search here..."
+                            onChangeText={setSearch}
+                            value={search}
+                            containerStyle={styles.searchBar}
+                            inputContainerStyle={styles.inputContainer}
+                            inputStyle={styles.input}
+                            searchIcon={{ type: 'font-awesome', name: 'search', color: COLORS.GREEN, size: getResponsiveDimension(25,10) }}
+                            placeholderTextColor={COLORS.CHARCOAL_GRAY}
                         />
-                        {renderContactInfo()}
                     </View>
-                }
-            />
-
-            {/* Navigation Bar with Links and Search Bar */}
-            <Header containerStyle={styles.navBar}
-                centerComponent={
-                    <View style={styles.navLinks}>
-                        {renderNavLinks()}
-                        <View style={styles.searchContainer}>
-                            <SearchBar
-                                placeholder="Search here..."
-                                onChangeText={setSearch}
-                                value={search}
-                                containerStyle={styles.searchBar}
-                                inputContainerStyle={styles.inputContainer}
-                                inputStyle={styles.input}
-                                searchIcon={{ type: 'font-awesome', name: 'search', color: COLORS.GREEN, size: 20 }}
-                                placeholderTextColor={COLORS.CHARCOAL_GRAY}
-                            />
-                        </View>
-
-                        <Button
-                            title="Get Started"
-                            buttonStyle={styles.button}
-                            titleStyle={styles.buttonTitle}
-                            onPress={openModal}
-                        />
-
-                    </View>
-                }
-            />
+                    <Button
+                        title="Get Started"
+                        buttonStyle={styles.button}
+                        titleStyle={styles.buttonTitle}
+                        onPress={openModal}
+                    />
+                </View>
+            </View>
             <GetStartedIntroModalWeb isVisible={isModalVisible} onClose={closeModal} />
         </View>
     );
 };
 
 // Styles
-const styles = StyleSheet.create({
-    stickyHeaderContainer: {
-        position: 'sticky',
-        top: 0,
-        zIndex: 1000,
-    },
-    topBar: {
-        backgroundColor: COLORS.WHITE,
-        paddingVertical: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-    },
-    logo: {
-        width: SCREEN_WIDTH > 768 ? 300 : 150,
-        height: 50,
-        resizeMode: 'contain',
-        marginBottom: 10,
-    },
-    contactInfo: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        justifyContent: 'center', // Center items when wrapping
-        width: '120%', // Ensure it adapts to the available space
-    },
-    infoItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginHorizontal: SCREEN_WIDTH > 768 ? 15 : 5, // Adjust spacing for larger screens
-        marginVertical: 5,
-    },
-    icon: {
-        marginHorizontal: 5,
-        width: SCREEN_WIDTH > 768 ? 40 : 25, // Adjust size for larger screens
-        height: SCREEN_WIDTH > 768 ? 40 : 25,
-    },
-    infoText: {
-        fontSize: SCREEN_WIDTH > 768 ? 18 : 12, // Adjust font size based on screen width
-        color: COLORS.PRIMARY,
-        fontWeight: '500',
-    },
-    navBar: {
-        backgroundColor: COLORS.PRIMARY_DARK_EXTRA,
-        paddingVertical: 5,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 3,
+const generateStyles = ({
+    getResponsiveFontSize,
+    getResponsiveWidth,
+    getResponsiveHeight,
+    getResponsiveDimension }: any) => StyleSheet.create({
+        stickyHeaderContainer: {
+            position: 'sticky',
+            top: 0,
+            zIndex: 1000,
         },
-        shadowOpacity: 0.2,
-        shadowRadius: 6,
-        elevation: 5,
-    },
-    button: {
-        backgroundColor: COLORS.PINK_DARK,
-        borderRadius: 25,
-        paddingHorizontal: 15,
-        paddingVertical: 10
-    },
-    buttonTitle: {
-        fontSize: 16
-    },
-    navLinks: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        flex: 1
-    },
-    navButton: {
-        marginHorizontal: 10,
-        padding: 10,
-        borderRadius: 5, // Optional, for better visuals
-    },
-    navText: {
-        color: COLORS.WHITE,
-        fontSize: SCREEN_WIDTH > 768 ? 18 : 14,
-        fontWeight: 'bold',
-    },
-    activeNavButton: {
-        borderBottomWidth: 5,
-        borderBottomColor: COLORS.OCEAN_TEAL,
-    },
-    hoveredNavButton: {
-        backgroundColor: COLORS.OCEAN_TEAL, // Change to your desired hover color
-    },
-    searchContainer: {
-        width: 200,
-        maxWidth: '100%',
-        marginHorizontal: 10,
-    },
-    searchBar: {
-        backgroundColor: 'transparent',
-        borderTopWidth: 0,
-        borderBottomWidth: 0,
-        flex: 1,
-    },
-    inputContainer: {
-        backgroundColor: COLORS.WHITE,
-        borderRadius: 20,
-        height: 40,
-        paddingHorizontal: 10,
-    },
-    input: {
-        fontSize: SCREEN_WIDTH > 768 ? 16 : 14,
-        color: COLORS.BLUE,
-    },
-});
+        topBar: {
+            backgroundColor: COLORS.WHITE,
+            paddingVertical: getResponsiveDimension(3),
+            borderBottomWidth: 1,
+            borderBottomColor: '#ccc',
+        },
+        logo: {
+            width: getResponsiveWidth(180, 150),
+            height: getResponsiveHeight(50),
+            marginRight: getResponsiveDimension(20),
+            resizeMode: 'center',
+        },
+        contactInfo: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            paddingHorizontal: getResponsiveDimension(10),
+            flexWrap: 'wrap',
+        },
+        infoItem: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginHorizontal: getResponsiveDimension(10),
+        },
+        icon: {
+            width: getResponsiveWidth(35,15),
+            height: getResponsiveHeight(35,15),
+            resizeMode: 'center',
+            marginHorizontal: 5,
+        },
+        infoText: {
+            fontSize: getResponsiveFontSize(15, 8),
+            color: COLORS.PRIMARY,
+            fontWeight: '400',
+        },
+        navBar: {
+            backgroundColor: COLORS.PRIMARY_DARK_EXTRA,
+            paddingVertical: 6,
+            shadowOffset: { width: 0, height: 3 },
+            shadowOpacity: 0.2,
+            shadowRadius: 6,
+            elevation: 5
+        },
+        button: {
+            backgroundColor: COLORS.PINK_DARK,
+            borderRadius: 25,
+            paddingVertical: 10,
+            paddingHorizontal: 15,
+            marginLeft: getResponsiveDimension(10),
+            height: getResponsiveDimension(35,30)
+        },
+        buttonTitle: {
+            fontSize: getResponsiveFontSize(16,10),
+        },
+        navLinks: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            width: '100%',
+            paddingHorizontal: getResponsiveDimension(10),
+        },
+        navButton: {
+            marginHorizontal: getResponsiveDimension(5),
+            padding: 10,
+            borderRadius: 5,
+        },
+        navText: {
+            color: COLORS.WHITE,
+            fontSize: getResponsiveFontSize(16,10),
+            fontWeight: 'bold',
+        },
+        activeNavButton: {
+            borderBottomWidth: 2,
+            borderTopWidth: 1,
+            borderBottomColor: COLORS.BLACK,
+            borderTopColor: COLORS.PRIMARY_LIGHT_EXTRA,
+        },
+        hoveredNavButton: {
+            backgroundColor: COLORS.OCEAN_TEAL,
+        },
+        searchContainer: {
+            width: getResponsiveDimension(200, 150),
+            maxWidth: 300,
+            marginHorizontal: getResponsiveDimension(10),
+        },
+        searchBar: {
+            backgroundColor: 'transparent',
+            borderBottomWidth: 0,
+            borderTopWidth: 0,
+        },
+        inputContainer: {
+            backgroundColor: COLORS.WHITE,
+            borderRadius: 20,
+            height: getResponsiveDimension(10),
+            paddingStart: 5,
+        },
+        input: {
+            fontSize: getResponsiveFontSize(14,10),
+            color: COLORS.BLUE,
+        },
+    });
 
 export { CustomHeader };
