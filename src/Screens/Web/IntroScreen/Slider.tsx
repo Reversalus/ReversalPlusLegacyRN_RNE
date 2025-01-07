@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Dimensions, ImageBackground } from 'react-native';
 import { Text, Button } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LottieView from 'lottie-react-native';
 import { COLORS, ImgUrl, LottieUrl } from '../../../Constants';
+import { GetStartedIntroModalWeb } from '../../Web';
 
 const { width } = Dimensions.get('window');
 
@@ -27,6 +28,10 @@ const Slider = () => {
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isImageBackgroundEnabled, setIsImageBackgroundEnabled] = useState(true); // Default to image background
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => setModalVisible(true);
+  const closeModal = () => setModalVisible(false);
 
   const typeSpeed = 100;
   const deleteSpeed = 70;
@@ -76,7 +81,7 @@ const Slider = () => {
             title="Get Started"
             buttonStyle={styles.button}
             titleStyle={styles.buttonTitle}
-            onPress={() => alert("Learn More clicked!")}
+            onPress={openModal}
             icon={<Icon name="arrow-right" size={20} color="white" style={styles.buttonIcon} />}
             iconPosition="right"
           />
@@ -113,6 +118,7 @@ const Slider = () => {
           </View>
         ))}
       </View>
+      <GetStartedIntroModalWeb isVisible={isModalVisible} onClose={closeModal} />
     </View>
   );
 };

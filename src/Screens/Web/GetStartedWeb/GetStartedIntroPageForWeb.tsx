@@ -1,18 +1,22 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Modal, View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Button, Text } from '@rneui/themed';
 import { COLORS, DeepLinks, LottieUrl } from '../../../Constants';
-import lottie from 'lottie-web';
+import LottieView from 'lottie-react-native';
 import { handleDeepLinkNavigation, ScaleSize } from '../../../Utils';
 
-const GetStartedIntroModalWeb = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
-  const [activePage, setActivePage] = useState(0);
-  const lottieRefs = useRef<any>({});
+interface GetStartedIntroModalWebProps {
+  isVisible: boolean;
+  onClose: () => void;
+}
 
-  const onCloseAction = useCallback( () => {
-    setActivePage(0)
-    onClose()
-  },[])
+const GetStartedIntroModalWeb: React.FC<GetStartedIntroModalWebProps> = ({ isVisible, onClose }) => {
+  const [activePage, setActivePage] = useState(0);
+
+  const onCloseAction = useCallback(() => {
+    setActivePage(0);
+    onClose();
+  }, [onClose]);
 
   const pages = [
     {
@@ -37,84 +41,56 @@ const GetStartedIntroModalWeb = ({ isVisible, onClose }: { isVisible: boolean; o
     },
   ];
 
-  const LottieAnimation = ({ animationUrl }: { animationUrl: string }) => {
-    useEffect(() => {
-      if (!lottieRefs.current[animationUrl]) {
-        const container = document.getElementById(`lottie-${animationUrl}`);
-        if (container) {
-          lottieRefs.current[animationUrl] = lottie.loadAnimation({
-            container,
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path: animationUrl,
-          });
-        }
-      }
-      
-      return () => {
-        lottieRefs.current[animationUrl]?.destroy();
-        delete lottieRefs.current[animationUrl];
-      };
-    }, [animationUrl]);
-
-    return <div id={`lottie-${animationUrl}`} style={{ width: '100%', height: '100%' }} />;
-  };
-
   if (!isVisible) return null;
 
   return (
     <Modal visible={isVisible} transparent animationType="fade">
       <TouchableWithoutFeedback onPress={onCloseAction}>
         <View style={styles.overlay}>
-          <TouchableWithoutFeedback>
-            <View style={styles.modalContainer}>
-              <View style={styles.slideContainer}>
-                {pages.map(
-                  (page, index) =>
-                    index === activePage && (
-                      <View key={index} style={styles.slide}>
-                        <LottieAnimation animationUrl={page.animationUrl} />
-                        <View style={styles.content}>
-                          <Text style={styles.title}>{page.title}</Text>
-                          <Text style={styles.description}>{page.description}</Text>
-                          <Text style={styles.pageCounter}>{`${index + 1}/${pages.length}`}</Text>
-                        </View>
+          <View style={styles.modalContainer}>
+            <View style={styles.slideContainer}>
+              {pages.map(
+                (page, index) =>
+                  index === activePage && (
+                    <View key={index} style={styles.slide}>
+                      <LottieView source={{ uri: page.animationUrl }} autoPlay loop />
+                      <View style={styles.content}>
+                        <Text style={styles.title}>{page.title}</Text>
+                        <Text style={styles.description}>{page.description}</Text>
+                        <Text style={styles.pageCounter}>{`${index + 1}/${pages.length}`}</Text>
                       </View>
-                    )
-                )}
-              </View>
-              <View style={styles.paginationContainer}>
-              {activePage == 0 && (
-                  <Button
-                    buttonStyle={{backgroundColor: COLORS.WHITE}}
-                  />
-                )}
-                {activePage !== 0 && (
-                  <Button
-                    title="Previous"
-                    onPress={() => setActivePage((prev) => Math.max(prev - 1, 0))}
-                    buttonStyle={styles.paginationButton}
-                  />
-                )}
-                {activePage === pages.length - 1 ? (
-                  <Button
-                    title="Get Started"
-                    onPress={()=> {
-                        onCloseAction()
-                        handleDeepLinkNavigation.navigate(DeepLinks.LOGIN)}}
-                    buttonStyle={styles.getStartedButton}
-                  />
-                ) : (
-                  <Button
-                    title="Next"
-                    onPress={() => setActivePage((prev) => Math.min(prev + 1, pages.length - 1))}
-                    buttonStyle={styles.nextButton}
-                  />
-                )}
-              </View>
+                    </View>
+                  )
+              )}
             </View>
-          </TouchableWithoutFeedback>
+            <View style={styles.paginationContainer}>
+              {activePage === 0 ? (
+                <Button buttonStyle={{ backgroundColor: COLORS.WHITE }} />
+              ) : (
+                <Button
+                  title="Previous"
+                  onPress={() => setActivePage((prev) => Math.max(prev - 1, 0))}
+                  buttonStyle={styles.paginationButton}
+                />
+              )}
+              {activePage === pages.length - 1 ? (
+                <Button
+                  title="Get Started"
+                  onPress={() => {
+                    onCloseAction();
+                    handleDeepLinkNavigation.navigate(DeepLinks.LOGIN);
+                  }}
+                  buttonStyle={styles.getStartedButton}
+                />
+              ) : (
+                <Button
+                  title="Next"
+                  onPress={() => setActivePage((prev) => Math.min(prev + 1, pages.length - 1))}
+                  buttonStyle={styles.nextButton}
+                />
+              )}
+            </View>
+          </View>
         </View>
       </TouchableWithoutFeedback>
     </Modal>
@@ -156,19 +132,19 @@ const styles = StyleSheet.create({
   title: {
     fontSize: ScaleSize(16),
     fontWeight: 'bold',
-    alignSelf:"center"
+    alignSelf: 'center',
   },
   description: {
     fontSize: ScaleSize(12),
     color: 'gray',
     marginTop: ScaleSize(5),
-    alignSelf:"center"
+    alignSelf: 'center',
   },
   pageCounter: {
     fontSize: ScaleSize(10),
     color: 'gray',
     marginTop: ScaleSize(5),
-    alignSelf:"center"
+    alignSelf: 'center',
   },
   paginationContainer: {
     flexDirection: 'row',
@@ -184,15 +160,15 @@ const styles = StyleSheet.create({
     padding: ScaleSize(5),
   },
   getStartedButton: {
-    backgroundColor: COLORS.BLUE,
+    backgroundColor: COLORS.PRIMARY_DARK_EXTRA,
     borderRadius: ScaleSize(20),
     padding: ScaleSize(5),
   },
   nextButton: {
-    backgroundColor: COLORS.BLACK,
-    borderRadius: ScaleSize(20),
-    padding: ScaleSize(5),
-    alignSelf: 'flex-end'
+    backgroundColor: COLORS.PINK_DARK,
+    borderRadius: ScaleSize(15),
+    paddingHorizontal: ScaleSize(15),
+    alignSelf: 'flex-end',
   },
 });
 
