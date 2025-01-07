@@ -2,6 +2,7 @@
   "name": "NewRNproject",
   "version": "0.0.1",
   "private": true,
+  "homepage": "https://github.com/Reversalus/ReversalPlusLegacyRN_RNE",
   "sideEffects": [
     "*.css",
     "*.scss"
@@ -73,8 +74,5 @@
     "webpack": "^5.97.1",
     "webpack-cli": "^5.1.0",
     "webpack-dev-server": "^4.15.0"
-  },
-  "engines": {
-    "node": "18.x"
   }
 }
