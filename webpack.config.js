@@ -67,7 +67,7 @@ module.exports = {
         app: path.join(appDirectory, "index.web.js"),
     },
     output: {
-        path: path.resolve(appDirectory, "dist"),
+        path: path.resolve(appDirectory, "public"),
         publicPath: "/",
         filename: "rnw.bundle.js",
     },
