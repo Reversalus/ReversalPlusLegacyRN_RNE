@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from "react";
 import { Image, View, StyleSheet, Dimensions, Pressable } from "react-native";
-import { Header, SearchBar, Text } from "@rneui/themed";
+import { Header, SearchBar, Text, Button, Icon } from "@rneui/themed";
 import { COLORS } from "../../../Constants";
 import { CustomHeaderProps, InfoItemProps, NavButtonProps } from "./type.ts";
-
+import { GetStartedIntroModalWeb } from '../../Web';
 // Get device dimensions
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
@@ -11,6 +11,11 @@ const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection }) => {
     const [search, setSearch] = useState<string>("");
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    const openModal = () => setModalVisible(true);
+    const closeModal = () => setModalVisible(false);
 
     // Navigation Button Component
     const NavButton: React.FC<NavButtonProps> = ({ title, index, isActive }) => {
@@ -80,13 +85,13 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection 
             {/* Top Bar with Logo and Contact Information */}
             <Header containerStyle={styles.topBar}
                 centerComponent={
-                        <View style={styles.contactInfo}>
+                    <View style={styles.contactInfo}>
                         <Image
                             source={{ uri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/reversal_long_logo.png' }}
                             style={styles.logo}
                         />
-                            {renderContactInfo()}
-                        </View>
+                        {renderContactInfo()}
+                    </View>
                 }
             />
 
@@ -107,9 +112,18 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection 
                                 placeholderTextColor={COLORS.CHARCOAL_GRAY}
                             />
                         </View>
+
+                        <Button
+                            title="Get Started"
+                            buttonStyle={styles.button}
+                            titleStyle={styles.buttonTitle}
+                            onPress={openModal}
+                        />
+
                     </View>
                 }
             />
+            <GetStartedIntroModalWeb isVisible={isModalVisible} onClose={closeModal} />
         </View>
     );
 };
@@ -133,7 +147,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         marginBottom: 10,
     },
-     contactInfo: {
+    contactInfo: {
         flexDirection: 'row',
         alignItems: 'center',
         flexWrap: 'wrap',
@@ -158,7 +172,7 @@ const styles = StyleSheet.create({
     },
     navBar: {
         backgroundColor: COLORS.PRIMARY_DARK_EXTRA,
-        paddingVertical: 5, 
+        paddingVertical: 5,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -168,11 +182,21 @@ const styles = StyleSheet.create({
         shadowRadius: 6,
         elevation: 5,
     },
+    button: {
+        backgroundColor: COLORS.PINK_DARK,
+        borderRadius: 25,
+        paddingHorizontal: 15,
+        paddingVertical: 10
+    },
+    buttonTitle: {
+        fontSize: 16
+    },
     navLinks: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        flexWrap: 'wrap',
+        width: '100%',
+        flex: 1
     },
     navButton: {
         marginHorizontal: 10,
@@ -192,7 +216,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.OCEAN_TEAL, // Change to your desired hover color
     },
     searchContainer: {
-        width: 200, 
+        width: 200,
         maxWidth: '100%',
         marginHorizontal: 10,
     },
