@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Dimensions, ImageBackground } from 'react-native';
+import { View, StyleSheet, ImageBackground } from 'react-native';
 import { Text, Button } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LottieView from 'lottie-react-native';
 import { COLORS, ImgUrl, LottieUrl } from '../../../Constants';
 import { GetStartedIntroModalWeb } from '../../Web';
-
-const { width } = Dimensions.get('window');
+import useResponsiveDimensions from "../../../Hooks/useResponsiveDimensions";
 
 const sentences = [
   "Welcome to Reversal+",
@@ -27,8 +26,9 @@ const Slider = () => {
   const [sentenceIndex, setSentenceIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isImageBackgroundEnabled, setIsImageBackgroundEnabled] = useState(true); // Default to image background
   const [isModalVisible, setModalVisible] = useState(false);
+  
+  const { getResponsiveFontSize, getResponsiveDimension, getResponsiveHeight, isPortrait } = useResponsiveDimensions();
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
@@ -37,11 +37,18 @@ const Slider = () => {
   const deleteSpeed = 70;
   const holdTime = 800;
 
+  const styles = generateStyles({
+    getResponsiveFontSize,
+    getResponsiveDimension,
+    getResponsiveHeight,
+    isPortrait
+  });
+
   useEffect(() => {
     const currentSentence = sentences[sentenceIndex];
 
-    let timeout: any;
-    
+    let timeout;
+
     if (!isDeleting) {
       if (charIndex < currentSentence.length) {
         timeout = setTimeout(() => {
@@ -66,17 +73,17 @@ const Slider = () => {
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, sentenceIndex]);
 
-  const renderBackground = () => {
-    if (isImageBackgroundEnabled) {
-      return (
-        <ImageBackground
-          source={{ uri: ImgUrl.BG_3 }}
-          style={styles.backgroundImage}
-          resizeMode="cover"
-        >
-          <View style={styles.overlay} />
-          <Text style={styles.typingText}>{`${displayText}｜`}</Text>
+  return (
+    <View style={styles.container}>
+      <ImageBackground
+        source={{ uri: ImgUrl.BG_3 }}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      >
+        <View style={styles.overlay} />
 
+        <View style={styles.header}>
+          <Text style={styles.typingText}>{`${displayText}｜`}</Text>
           <Button
             title="Get Started"
             buttonStyle={styles.button}
@@ -85,78 +92,37 @@ const Slider = () => {
             icon={<Icon name="arrow-right" size={20} color="white" style={styles.buttonIcon} />}
             iconPosition="right"
           />
-        </ImageBackground>
-      );
-    } else {
-      return (
-        <LottieView
-          source={{ uri: LottieUrl.HEALTH_CARE }}
-          autoPlay
-          loop
-          style={styles.lottieAnimation}
-        />
-      );
-    }
-  };
+        </View>
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        {renderBackground()}
-      </View>
-
-      <View style={styles.infoContainer}>
-        {icons.map((iconName, index) => (
-          <View key={index} style={[styles.card[index], styles.cardColors[index]]}>
-            <Icon name={iconName} size={40} color="white" />
-            <Text h4 style={styles.cardTitle}>
-              {titles[index]}
-            </Text>
-            <Text style={styles.cardText}>
-              {subtitles[index]}
-            </Text>
-          </View>
-        ))}
-      </View>
+        <View style={styles.infoContainer}>
+          {icons.map((iconName, index) => (
+            <View key={index} style={[styles.card, styles.cardColors[index], index === 1 ? styles.middleCard : null]}>
+              <Icon name={iconName} size={getResponsiveDimension(40, 25)} color="white" />
+              <Text style={styles.cardTitle}>
+                {titles[index]}
+              </Text>
+              <Text style={styles.cardText}>
+                {subtitles[index]}
+              </Text>
+            </View>
+          ))}
+        </View>
+      </ImageBackground>
       <GetStartedIntroModalWeb isVisible={isModalVisible} onClose={closeModal} />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+const generateStyles = ({ getResponsiveDimension, getResponsiveFontSize, getResponsiveHeight, isPortrait }: any) => StyleSheet.create({
   container: {
-    flex: 1,
+    width: '100%',
+    height: getResponsiveHeight(800),
     backgroundColor: COLORS.WHITE,
-  },
-  header: {
-    flex: 1,
-    width: '100%',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    position: 'relative',
-  },
-  typingText: {
-    fontSize: 40,
-    color: COLORS.WHITE,
-    textAlign: 'center',
-    backgroundColor: `${COLORS.PINK_DARK}88`, // Semi-transparent background for text
-    padding: 10,
-    borderRadius: 10,
-    position: 'absolute',
-    top: '15%',
-  },
-  lottieAnimation: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    top: 0,
-    left: 0,
+    marginTop: isPortrait? 80:0,
   },
   backgroundImage: {
     flex: 1,
     alignItems: 'center',
-    width: '100%',
-    height: '100%',
   },
   overlay: {
     position: 'absolute',
@@ -164,66 +130,61 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: `${COLORS.WHITE}88`, // Pink semi-transparent overlay
+    backgroundColor: `${COLORS.WHITE}88`, // Semi-transparent overlay
+  },
+  header: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1, // Ensure header is above overlay
+  },
+  typingText: {
+    fontSize: getResponsiveFontSize(40, 30),
+    color: COLORS.WHITE,
+    textAlign: 'center',
+    backgroundColor: `${COLORS.PINK_DARK}88`, // Semi-transparent background for text
+    padding: getResponsiveDimension(10, 5),
+    borderRadius: 10,
+    marginBottom: getResponsiveDimension(10, 5),
   },
   button: {
     backgroundColor: COLORS.PINK_DARK,
     borderRadius: 30,
-    paddingVertical: 20,
-    paddingHorizontal: 20,
-    marginTop: 250,
+    paddingVertical: getResponsiveDimension(15,10),
+    paddingHorizontal: getResponsiveDimension(20,15),
+    marginTop: getResponsiveDimension(55, 15), 
   },
   buttonTitle: {
-    fontSize: 18,
+    fontSize: getResponsiveFontSize(18, 16),
     fontWeight: 'bold',
   },
   buttonIcon: {
-    marginLeft: 10,
+    marginLeft: getResponsiveDimension(10, 5),
   },
   infoContainer: {
     flexDirection: 'row',
-    position: 'absolute',
-    top: '55%',
-    alignSelf: 'center',
+    flexWrap: 'wrap', // Allow wrapping to next line for smaller screens
+    justifyContent: 'space-evenly', // Space evenly between cards
+    paddingVertical: getResponsiveDimension(20),
+    paddingHorizontal: getResponsiveDimension(10),
+    zIndex: 1, // Ensure cards are above overlay
   },
-  card: [{
-    width: 300,
-    height: 300,
-    padding: 20,
+  card: {
+    width: getResponsiveDimension(275,100), // Adjust size as required
+    height: getResponsiveDimension(300, 200),
+    padding: getResponsiveDimension(20),
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    elevation: 15,
-    shadowColor: '#000',
+    elevation: 5,
+    shadowColor: COLORS.PINK_DARK,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
   },
-  {
-    width: 300,
-    height: 330,
-    padding: 20,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    elevation: 15,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
+  middleCard: {
+    width: getResponsiveDimension(300,100), // Slightly larger width
+    height: getResponsiveDimension(325, 225), // Slightly larger height
   },
-  {
-    width: 300,
-    height: 300,
-    padding: 20,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    elevation: 15,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-  }
-  ],
-
   cardColors: [
     { backgroundColor: COLORS.PRIMARY },
     { backgroundColor: COLORS.PRIMARY_DARK_EXTRA },
@@ -231,11 +192,13 @@ const styles = StyleSheet.create({
   ],
   cardTitle: {
     color: 'white',
+    fontSize: getResponsiveFontSize(20, 14),
+    textAlign: 'center',
   },
   cardText: {
     color: 'white',
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: getResponsiveFontSize(16, 10),
   },
 });
 

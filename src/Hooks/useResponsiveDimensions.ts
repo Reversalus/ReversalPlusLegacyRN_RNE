@@ -15,6 +15,7 @@ interface ScreenSize {
 interface ResponsiveDimensions {
   screenSize: ScreenSize;
   isWeb: boolean;
+  isPortrait: boolean,
   getResponsiveWidth: (size: number, minSize?: number) => number;
   getResponsiveHeight: (size: number, minSize?: number) => number;
   getResponsiveFontSize: (fontSize: number, minSize?: number) => number;
@@ -90,9 +91,12 @@ const useResponsiveDimensions = (): ResponsiveDimensions => {
     return (percentage / 100) * dimensionValue;
   };
 
+  const isPortrait = SCREEN_HEIGHT > SCREEN_WIDTH; // Check if the device is in portrait mode
+
   return {
     screenSize, // Current dimensions
     isWeb,
+    isPortrait,
     getResponsiveWidth,
     getResponsiveHeight,
     getResponsiveFontSize,

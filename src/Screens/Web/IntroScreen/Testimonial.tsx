@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Dimensions, StyleSheet, Alert, FlatList } from 'react-native';
 import { Card, Text, Image, Icon } from '@rneui/themed';
 import { COLORS } from '../../../Constants';
+import useResponsiveDimensions from '../../../Hooks/useResponsiveDimensions';
 
 interface Testimonial {
   id: string;
@@ -57,11 +58,23 @@ const testimonials: Testimonial[] = [
 ];
 
 const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }) => {
+
+  const { getResponsiveFontSize, getResponsiveDimension, getResponsiveWidth, getResponsiveHeight, isPortrait } = useResponsiveDimensions();
+
+const styles = generateStyles({
+  getResponsiveFontSize,
+  getResponsiveDimension,
+  getResponsiveWidth,
+  getResponsiveHeight,
+  isPortrait
+});
+
+
   const handleReadMore = () => {
     Alert.alert('Full Testimonial', testimonial.text, [{ text: 'Close', style: 'cancel' }]);
   };
 
-  const charLimit = 100;
+  const charLimit = 75;
 
   return (
     <Card containerStyle={styles.card}>
@@ -75,7 +88,7 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
         </View>
       )}
       <View style={styles.contentContainer}>
-        <Icon name="format-quote" type="material" color="#ccc" size={30} style={styles.quoteIcon} />
+        <Icon name="format-quote" type="material" color="#ccc" size={getResponsiveDimension(30,20)} style={styles.quoteIcon} />
         <Text style={styles.text}>
           {testimonial.text.length > charLimit
             ? `${testimonial.text.substring(0, charLimit)}... `
@@ -86,13 +99,13 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
             </Text>
           )}
         </Text>
-        <Icon name="format-quote" type="material" color="#ccc" size={30} style={[styles.quoteIcon, styles.quoteIconRight]} />
+        <Icon name="format-quote" type="material" color="#ccc" size={getResponsiveDimension(30,20)} style={[styles.quoteIcon, styles.quoteIconRight]} />
       </View>
       <View style={styles.footerContainer}>
         <Text style={styles.name}>{testimonial.name}</Text>
         <View style={styles.ratingContainer}>
           {[...Array(testimonial.rating)].map((_, index) => (
-            <Icon key={index} name="star" type="material" color="#FFD700" size={18} />
+            <Icon key={index} name="star" type="material" color="#FFD700" size={getResponsiveDimension(18,10)} />
           ))}
         </View>
       </View>
@@ -101,6 +114,17 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
 };
 
 const Testimonial: React.FC = () => {
+  const { getResponsiveFontSize, getResponsiveDimension, getResponsiveWidth, getResponsiveHeight, isPortrait } = useResponsiveDimensions();
+
+const styles = generateStyles({
+  getResponsiveFontSize,
+  getResponsiveDimension,
+  getResponsiveWidth,
+  getResponsiveHeight,
+  isPortrait
+});
+
+
   return (
     <View style={styles.container}>
       <Text h3 style={styles.heading}>
@@ -113,43 +137,47 @@ const Testimonial: React.FC = () => {
         data={testimonials}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <TestimonialCard testimonial={item} />}
-        numColumns={3}
+        numColumns={isPortrait?2:3}
         contentContainerStyle={styles.listContainer}
       />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+const generateStyles = ({getResponsiveFontSize,
+  getResponsiveDimension,
+  getResponsiveWidth,
+  getResponsiveHeight,
+  isPortrait} : any) => StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff',
-    marginHorizontal: '3%',
-    borderRadius: 25,
+    backgroundColor: COLORS.WHITE,
+    marginTop: isPortrait? getResponsiveDimension(320, 320): getResponsiveDimension(250, 250),
+    borderRadius: getResponsiveDimension(25),
     elevation: 10,
-    padding: '3%',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: '10%',
+    height: isPortrait? getResponsiveHeight(700) : getResponsiveHeight(650),
+    padding: getResponsiveDimension(20,20),
+    width: '96%',
+    alignSelf: 'center'
   },
   heading: {
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: getResponsiveDimension(10,10),
   },
   subheading: {
-    fontSize: 16,
+    fontSize: getResponsiveFontSize(16, 10),
     color: '#555',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: getResponsiveDimension(20,10),
   },
   listContainer: {
     justifyContent: 'center',
   },
   card: {
-    borderRadius: 16,
-    padding: 15,
-    margin: 10,
+    borderRadius: getResponsiveDimension(16, 14),
+    padding: getResponsiveDimension(15,12),
+    margin: getResponsiveWidth(10),
     flex: 1,
-    maxWidth: (Dimensions.get('window').width - 60) / 3, // Ensures 3 cards per row
+    width: getResponsiveDimension(500), // Ensures 3 cards per row
     elevation: 4,
     backgroundColor: `${COLORS.PRIMARY_LIGHT_EXTRA}40`, // Reverted to baby blue shade
     borderColor: COLORS.PRIMARY,
@@ -160,13 +188,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   headerImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: getResponsiveDimension(80,40),
+    height: getResponsiveDimension(80,40),
+    borderRadius: getResponsiveDimension(40, 20),
   },
   contentContainer: {
     alignItems: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: getResponsiveDimension(10),
     position: 'relative',
   },
   quoteIcon: {
@@ -175,26 +203,26 @@ const styles = StyleSheet.create({
     left: 10,
   },
   quoteIconRight: {
-    right: 10,
+    right: getResponsiveDimension(10,8),
     left: 'auto',
   },
   text: {
-    fontSize: 14,
+    fontSize: getResponsiveDimension(14,8),
     color: '#333',
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: getResponsiveDimension(10,8),
   },
   readMoreButton: {
-    fontSize: 14,
+    fontSize: getResponsiveDimension(14, 5),
     color: COLORS.PRIMARY_DARK_EXTRA,
     textDecorationLine: 'underline',
   },
   footerContainer: {
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: getResponsiveDimension(10,5),
   },
   name: {
-    fontSize: 16,
+    fontSize: getResponsiveDimension(16,6),
     fontWeight: 'bold',
     color: '#000',
     marginBottom: 5,

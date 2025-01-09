@@ -106,7 +106,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection 
                             containerStyle={styles.searchBar}
                             inputContainerStyle={styles.inputContainer}
                             inputStyle={styles.input}
-                            searchIcon={{ type: 'font-awesome', name: 'search', color: COLORS.GREEN, size: getResponsiveDimension(25,10) }}
+                            searchIcon={{ type: 'font-awesome', name: 'search', color: COLORS.GREEN, size: getResponsiveDimension(20,10) }}
                             placeholderTextColor={COLORS.CHARCOAL_GRAY}
                         />
                     </View>
