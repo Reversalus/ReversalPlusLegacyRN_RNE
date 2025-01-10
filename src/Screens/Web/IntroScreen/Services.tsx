@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { COLORS } from '../../../Constants';
 import { Icon } from '@rneui/themed';
 import useResponsiveDimensions from "../../../Hooks/useResponsiveDimensions";
@@ -43,10 +43,8 @@ const Services = () => {
 
       <View style={styles.servicesContainer}>
         {/* Only one ScrollView for both halves */}
-        <ScrollView
-          horizontal={!isPortrait}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollViewContainer}
+        <View
+          style={styles.scrollViewContainer}
         >
           {/* First Half */}
           <View style={styles.column}>
@@ -67,7 +65,7 @@ const Services = () => {
               </View>
             ))}
           </View>
-        </ScrollView>
+        </View>
       </View>
 
       <View style={styles.titleContainer}>
@@ -91,13 +89,12 @@ const Services = () => {
 const generateStyles = ({ getResponsiveDimension, getResponsiveFontSize, getResponsiveWidth, getResponsiveHeight, isPortrait }: any) => StyleSheet.create({
   container: {
     backgroundColor: COLORS.WHITE,
-    marginTop: getResponsiveDimension(250, 250),
     borderRadius: getResponsiveDimension(25),
     elevation: 10,
-    height: isPortrait? getResponsiveHeight(740) : getResponsiveHeight(650),
-    padding: getResponsiveDimension(20,20),
+    padding: getResponsiveDimension(30,20),
     width: '96%',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginTop: getResponsiveDimension(30,20)
   },
   titleContainer: {
     alignItems: 'center',

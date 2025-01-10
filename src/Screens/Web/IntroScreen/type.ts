@@ -2,7 +2,7 @@ import React from "react";
 
 export interface CustomHeaderProps {
     onNavigate: (index: number) => void;
-    currentSection: number;
+    currentSection?: number;
 }
 export interface NavButtonProps {
     title: string;
@@ -18,4 +18,5 @@ export interface InfoItemProps {
 export interface SectionProps {
     title: string;
     children: React.ReactNode;
+    minHeight?: number
 }

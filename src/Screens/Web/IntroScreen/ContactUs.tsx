@@ -74,7 +74,6 @@ const ContactUs = () => {
         {/* Contact Card */}
         <Card containerStyle={styles.cardContainer}>
           <Card.Title style={styles.cardTitle}>Contact Us</Card.Title>
-          <Card.Divider />
           <Input placeholder="Your Name" leftIcon={{ name: 'user', type: 'font-awesome' }} />
           <Input placeholder="Phone Number" leftIcon={{ name: 'phone', type: 'font-awesome' }} />
           <Input placeholder="Your Age" leftIcon={{ name: 'calendar', type: 'font-awesome' }} keyboardType="numeric" />
@@ -100,13 +99,12 @@ const ContactUs = () => {
 const generateStyles = ({ getResponsiveDimension, getResponsiveFontSize, getResponsiveWidth, getResponsiveHeight, isPortrait }: any) => StyleSheet.create({
   container: {
     backgroundColor: COLORS.WHITE,
-    marginTop: isPortrait ? getResponsiveDimension(370, 370) : getResponsiveDimension(260, 260),
+    marginTop: getResponsiveHeight(30, 20),
     borderRadius: getResponsiveDimension(25),
     elevation: 10,
-    height: isPortrait ? getResponsiveHeight(1500) : getResponsiveHeight(800),
+    height: isPortrait ? getResponsiveHeight(1500) : getResponsiveHeight(600),
     padding: getResponsiveDimension(20, 20),
-    width: '96%',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   title: {
     fontSize: getResponsiveFontSize(30, 20),
@@ -165,7 +163,7 @@ const generateStyles = ({ getResponsiveDimension, getResponsiveFontSize, getResp
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
-    height: getResponsiveHeight(700)
+    height: getResponsiveHeight(575)
   },
   cardTitle: {
     fontSize: getResponsiveFontSize(22, 10),

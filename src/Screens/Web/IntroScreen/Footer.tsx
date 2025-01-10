@@ -17,9 +17,7 @@ const Footer: React.FC = () => {
   });
   
   return (
-
-    !isPortrait && 
-    (<View style={styles.footer}>
+    <View style={styles.footer}>
       <Text style={styles.brand}>ReversalPlus</Text>
       
       <View style={styles.links}>
@@ -47,13 +45,11 @@ const Footer: React.FC = () => {
       </View>
 
       <Text style={styles.copyright}>© 2023 MyBrand. All rights reserved.</Text>
-    </View>)
-  );
+    </View>
+  )
 };
 
 const generateStyles = ({getResponsiveFontSize,
-  getResponsiveDimension,
-  getResponsiveWidth,
   getResponsiveHeight,
   isPortrait}:any) => StyleSheet.create({
   footer: {
@@ -61,10 +57,9 @@ const generateStyles = ({getResponsiveFontSize,
     bottom: 0,
     alignSelf: 'flex-end', // Center the content vertically
     backgroundColor: COLORS.PRIMARY_DARK_EXTRA,
-    marginTop: isPortrait? '300%' :'40%',
     padding: '2%',
-    flex: 1,
     width: '100%',
+    height: getResponsiveHeight(200)
   },
   brand: {
     fontSize: getResponsiveFontSize(24,18),

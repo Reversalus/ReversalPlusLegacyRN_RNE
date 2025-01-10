@@ -1,8 +1,10 @@
+// CustomHeader.tsx
+
 import React, { useState, useCallback } from "react";
 import { Image, View, StyleSheet, Pressable } from "react-native";
 import { Header, SearchBar, Text, Button } from "@rneui/themed";
-import { COLORS } from "../../../Constants";
-import { CustomHeaderProps, InfoItemProps, NavButtonProps } from "./type.ts";
+import { COLORS } from "../../../Constants"; // Ensure your COLORS is correctly defined
+import { CustomHeaderProps, InfoItemProps, NavButtonProps } from "./type";
 import { GetStartedIntroModalWeb } from '../../Web';
 import useResponsiveDimensions from "../../../Hooks/useResponsiveDimensions";
 
@@ -83,7 +85,6 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection 
 
     return (
         <View style={styles.stickyHeaderContainer}>
-            {/* First Row: Logo and Contact Info */}
             <View style={styles.topBar}>
                 <View style={styles.contactInfo}>
                     <Image
@@ -94,7 +95,6 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection 
                 </View>
             </View>
 
-            {/* Second Row: Navigation Links, Search Bar, and Get Started Button */}
             <View style={styles.navBar}>
                 <View style={styles.navLinks}>
                     {renderNavLinks()}
@@ -238,4 +238,4 @@ const generateStyles = ({
         },
     });
 
-export { CustomHeader };
+export { CustomHeader }

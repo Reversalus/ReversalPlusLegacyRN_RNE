@@ -151,10 +151,9 @@ const generateStyles = ({getResponsiveFontSize,
   isPortrait} : any) => StyleSheet.create({
   container: {
     backgroundColor: COLORS.WHITE,
-    marginTop: isPortrait? getResponsiveDimension(320, 320): getResponsiveDimension(250, 250),
     borderRadius: getResponsiveDimension(25),
     elevation: 10,
-    height: isPortrait? getResponsiveHeight(700) : getResponsiveHeight(650),
+    marginTop: getResponsiveDimension(30,20),
     padding: getResponsiveDimension(20,20),
     width: '96%',
     alignSelf: 'center'
