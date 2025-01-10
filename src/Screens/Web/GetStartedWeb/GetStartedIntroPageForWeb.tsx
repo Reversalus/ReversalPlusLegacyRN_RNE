@@ -104,12 +104,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContainer: {
-    width: '45%',
+    width: '50%',
     height: '60%',
     backgroundColor: 'white',
     borderRadius: 10,
     overflow: 'hidden',
-    marginTop: '10%',
+    marginTop: '20%',
     justifyContent: 'center',
   },
   slideContainer: {

@@ -3,7 +3,7 @@ import { View, StyleSheet, Alert, Animated } from 'react-native';
 import { Input, Button, Icon, Text, Image } from '@rneui/themed';
 import CommonHeader from '../CommonComponents/CommonHeader';
 import {ScaleSize, handleDeepLinkNavigation} from '../Utils';
-import { COLORS, DeepLinks } from '../Constants';
+import { COLORS, DeepLinks, ImgUrl } from '../Constants';
 import Logo from '../assets';
 
 const LoginScreen = ({ navigation }: any) => {
@@ -52,7 +52,7 @@ const LoginScreen = ({ navigation }: any) => {
             <View style={styles.container}>
                 <Animated.View style={[styles.logoContainer, { transform: [{ translateY: logoPosition }] }]}> 
                     <Image
-                        source={require("../assets/reversal_logo.png")}
+                        source={{ uri: ImgUrl.REVERSAL_LOGO }}
                         style={styles.logo}
                         PlaceholderContent={<Icon name="image" />}
                     />
@@ -147,7 +147,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 5,
         elevation: 5,
-        marginTop: ScaleSize(-270),
+        // marginTop: ScaleSize(-270),
+        marginTop: ScaleSize(-200),
     },
     header: {
         textAlign: 'center',
