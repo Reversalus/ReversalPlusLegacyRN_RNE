@@ -143,9 +143,10 @@ const generateStyles = ({
             borderBottomColor: '#ccc'
         },
         logo: {
-            width: getResponsiveWidth(180, 180),
+            width: getResponsiveWidth(180, 150),
             height: getResponsiveHeight(50),
-            marginRight: getResponsiveDimension(20)
+            marginRight: getResponsiveDimension(20),
+            resizeMode: 'contain'
         },
         contactInfo: {
             flexDirection: 'row',

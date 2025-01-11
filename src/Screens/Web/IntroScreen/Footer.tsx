@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
       <View style={styles.sectionContainer}>
         {/* Logo and description */}
         <View style={styles.brandSection}>
-          <Text style={styles.brand}>Reversal Plus</Text>
+          <Text style={styles.brand}>REVERSAL PLUS</Text>
           <Text style={styles.description}>
             Locavore pork belly scen ester pine est chill wave microdosing pop uple itarian cliche artisan.
           </Text>
@@ -104,37 +104,40 @@ const generateStyles = ({ getResponsiveFontSize, getResponsiveWidth, getResponsi
     },
     brandSection: {
       flex: 1,
+      padding: 5
     },
     brand: {
-      fontSize: getResponsiveFontSize(20),
+      fontSize: getResponsiveFontSize(14,12),
       fontWeight: 'bold',
       color: COLORS.PRIMARY_DARK,
       marginBottom: getResponsiveHeight(10),
     },
     description: {
       color: '#666',
-      fontSize: getResponsiveFontSize(12),
+      fontSize: getResponsiveFontSize(12,8),
     },
     contactSection: {
       flex: 1,
+      padding: 5
     },
     sectionTitle: {
-      fontSize: getResponsiveFontSize(14),
+      fontSize: getResponsiveFontSize(14,12),
       fontWeight: 'bold',
       color: COLORS.PRIMARY_DARK,
       marginBottom: getResponsiveHeight(10),
     },
     contactText: {
       color: '#666',
-      fontSize: getResponsiveFontSize(12),
+      fontSize: getResponsiveFontSize(12,8),
       marginBottom: getResponsiveHeight(5),
     },
     subscribeSection: {
       flex: 1,
+      padding: 5
     },
     subscribeText: {
       color: '#666',
-      fontSize: getResponsiveFontSize(12),
+      fontSize: getResponsiveFontSize(12,8),
       marginBottom: getResponsiveHeight(10),
     },
     inputContainer: {
@@ -148,7 +151,7 @@ const generateStyles = ({ getResponsiveFontSize, getResponsiveWidth, getResponsi
     emailInput: {
       flex: 1,
       padding: getResponsiveHeight(8),
-      fontSize: getResponsiveFontSize(12),
+      fontSize: getResponsiveFontSize(12, 10),
     },
     subscribeButton: {
       backgroundColor: COLORS.PRIMARY_DARK,
@@ -171,7 +174,7 @@ const generateStyles = ({ getResponsiveFontSize, getResponsiveWidth, getResponsi
     },
     copyright: {
       color: COLORS.WHITE,
-      fontSize: getResponsiveFontSize(20,18),
+      fontSize: getResponsiveFontSize(20,15),
       fontFamily: 'AlegreyaSans-Regular'
     },
     socialIcons: {

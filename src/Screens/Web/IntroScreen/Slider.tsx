@@ -167,7 +167,8 @@ const generateStyles = ({ getResponsiveDimension, getResponsiveFontSize, getResp
       backgroundColor: COLORS.PINK_DARK,
       borderRadius: 30,
       paddingVertical: getResponsiveDimension(15, 10),
-      paddingHorizontal: getResponsiveDimension(20, 15)
+      paddingHorizontal: getResponsiveDimension(20, 15),
+      marginVertical: getResponsiveDimension(10,10)
     },
     buttonTitle: {
       fontSize: getResponsiveFontSize(18, 16),
@@ -183,7 +184,7 @@ const generateStyles = ({ getResponsiveDimension, getResponsiveFontSize, getResp
       paddingVertical: getResponsiveDimension(50),
     },
     card: {
-      width: getResponsiveDimension(275, 150),
+      width: getResponsiveDimension(275, 225),
       height: getResponsiveDimension(300, 200),
       padding: getResponsiveDimension(20),
       alignItems: 'center',
@@ -195,7 +196,7 @@ const generateStyles = ({ getResponsiveDimension, getResponsiveFontSize, getResp
       shadowRadius: 4,
     },
     middleCard: {
-      width: getResponsiveDimension(300, 150),
+      width: getResponsiveDimension(300, 225),
       height: getResponsiveDimension(325, 225),
     },
     cardColors: [
