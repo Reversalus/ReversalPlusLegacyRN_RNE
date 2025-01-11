@@ -82,7 +82,6 @@ const Slider = React.memo(() => {
       <ScrollView 
         contentContainerStyle={{ flexGrow: 1 }} 
         style={styles.scrollView}
-        scrollEnabled={false} // Disable internal scrolling
       >
         <ImageBackground
           source={{ uri: ImgUrl.BG_3 }}
@@ -90,6 +89,7 @@ const Slider = React.memo(() => {
           resizeMode="cover"
         >
           <View style={styles.overlay} />
+          
           <View style={styles.header}>
             <Text style={styles.typingText}>{`${displayText}｜`}</Text>
             <Button
@@ -100,8 +100,7 @@ const Slider = React.memo(() => {
               icon={<Icon name="arrow-right" size={20} color="white" style={styles.buttonIcon} />}
               iconPosition="right"
             />
-          </View>
-          <View style={styles.infoContainer}>
+            <View style={styles.infoContainer}>
             {icons.map((iconName, index) => (
               <View
                 key={iconName}
@@ -116,6 +115,8 @@ const Slider = React.memo(() => {
                 <Text style={styles.cardText}>{subtitles[index]}</Text>
               </View>
             ))}
+          </View>
+
           </View>
         </ImageBackground>
         <GetStartedIntroModalWeb isVisible={isModalVisible} onClose={closeModal} />
@@ -133,7 +134,7 @@ const generateStyles = ({ getResponsiveDimension, getResponsiveFontSize, getResp
       backgroundColor: COLORS.WHITE
     },
     scrollView: {
-      flex: 1,
+      flex: 1
     },
     backgroundImage: {
       flex: 1,
@@ -149,9 +150,9 @@ const generateStyles = ({ getResponsiveDimension, getResponsiveFontSize, getResp
     },
     header: {
       flex: 1,
-      justifyContent: 'center',
+      justifyContent: 'space-around',
       alignItems: 'center',
-      zIndex: 1,
+      marginVertical: getResponsiveDimension(100,50)
     },
     typingText: {
       fontSize: getResponsiveFontSize(40, 30),
@@ -160,32 +161,29 @@ const generateStyles = ({ getResponsiveDimension, getResponsiveFontSize, getResp
       backgroundColor: `${COLORS.PINK_DARK}88`,
       padding: getResponsiveDimension(10, 5),
       borderRadius: 10,
-      marginBottom: getResponsiveDimension(10, 5),
+      fontFamily: "AlegreyaSans-Regular"
     },
     button: {
       backgroundColor: COLORS.PINK_DARK,
       borderRadius: 30,
       paddingVertical: getResponsiveDimension(15, 10),
-      paddingHorizontal: getResponsiveDimension(20, 15),
-      marginTop: getResponsiveDimension(55, 15),
+      paddingHorizontal: getResponsiveDimension(20, 15)
     },
     buttonTitle: {
       fontSize: getResponsiveFontSize(18, 16),
-      fontWeight: 'bold',
+      fontWeight: 'bold'
     },
     buttonIcon: {
       marginLeft: getResponsiveDimension(10, 5),
     },
     infoContainer: {
-      flexDirection: 'row',
+      flexDirection: isPortrait? 'column' : 'row',
       flexWrap: 'wrap',
-      justifyContent: 'space-evenly',
-      paddingVertical: getResponsiveDimension(20),
       paddingHorizontal: getResponsiveDimension(10),
-      zIndex: 1,
+      paddingVertical: getResponsiveDimension(50),
     },
     card: {
-      width: getResponsiveDimension(275, 100),
+      width: getResponsiveDimension(275, 150),
       height: getResponsiveDimension(300, 200),
       padding: getResponsiveDimension(20),
       alignItems: 'center',
@@ -197,13 +195,13 @@ const generateStyles = ({ getResponsiveDimension, getResponsiveFontSize, getResp
       shadowRadius: 4,
     },
     middleCard: {
-      width: getResponsiveDimension(300, 100),
+      width: getResponsiveDimension(300, 150),
       height: getResponsiveDimension(325, 225),
     },
     cardColors: [
+      { backgroundColor: COLORS.PRIMARY_BLUE },
       { backgroundColor: COLORS.PRIMARY },
-      { backgroundColor: COLORS.PRIMARY_DARK_EXTRA },
-      { backgroundColor: COLORS.PRIMARY },
+      { backgroundColor: COLORS.PRIMARY_BLUE },
     ],
     cardTitle: {
       color: 'white',

@@ -164,14 +164,14 @@ const generateStyles = ({ getResponsiveDimension, getResponsiveFontSize, getResp
   heading: {
     fontSize: getResponsiveFontSize(20, 10),
     fontWeight: 'bold',
-    color: COLORS.PRIMARY,
+    color: COLORS.PRIMARY_BLUE,
     marginBottom: 5,
     textAlign: 'center', // Center heading inside the card
   },
   description: {
     fontSize: getResponsiveFontSize(14, 8),
-    color: '#666666',
     lineHeight: getResponsiveDimension(20,10),
+    color: COLORS.PRIMARY_DARK,
     textAlign: 'center',
   },
 });

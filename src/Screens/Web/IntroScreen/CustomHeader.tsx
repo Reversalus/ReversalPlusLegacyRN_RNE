@@ -51,9 +51,6 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection 
             <Image source={{ uri: iconUri }} style={styles.icon} />
             </View>
             <Text style={styles.infoText}>{text}</Text>
-            <Text style={{ fontFamily: 'AlegreyaSans-Black', fontSize: 20 }}>
-        This is AlegreyaSans-Black
-      </Text>
         </View>
     );
 
@@ -146,9 +143,9 @@ const generateStyles = ({
             borderBottomColor: '#ccc'
         },
         logo: {
-            width: getResponsiveWidth(180, 150),
+            width: getResponsiveWidth(180, 180),
             height: getResponsiveHeight(50),
-            marginRight: getResponsiveDimension(20),
+            marginRight: getResponsiveDimension(20)
         },
         contactInfo: {
             flexDirection: 'row',
@@ -176,9 +173,9 @@ const generateStyles = ({
             marginHorizontal: 5
         },
         infoText: {
-            fontSize: getResponsiveFontSize(95, 8),
+            fontSize: getResponsiveFontSize(25, 8),
             color: COLORS.BLACK,
-            fontFamily: 'AlegreyaSans-Black'
+            fontFamily: 'AlegreyaSans-Regular'
         },
         navBar: {
             backgroundColor: COLORS.PRIMARY_BLUE,

@@ -165,7 +165,7 @@ const generateStyles = ({
   textSection: {
     width: getResponsiveWidth(600, 250),
     height: isPortrait ? getResponsiveHeight(250) : getResponsiveHeight(500),
-    backgroundColor: `${COLORS.PRIMARY_LIGHT_EXTRA}40`,
+    backgroundColor: `${COLORS.PRIMARY_BLUE}20`,
     padding: getResponsiveDimension(20, 10),
     borderRadius: getResponsiveDimension(20),
     elevation: 8,
@@ -174,6 +174,7 @@ const generateStyles = ({
     shadowOpacity: 0.3,
     shadowRadius: 3,
     justifyContent: 'space-between',
+    marginTop: isPortrait && getResponsiveDimension(20,10)
   },
   subtitle: {
     fontSize: getResponsiveFontSize(14, 10),
@@ -194,7 +195,7 @@ const generateStyles = ({
     marginBottom: getResponsiveDimension(10),
   },
   button: {
-    backgroundColor: COLORS.PRIMARY_DARK_EXTRA,
+    backgroundColor: COLORS.PRIMARY,
     borderRadius: getResponsiveDimension(25),
     paddingHorizontal: getResponsiveDimension(20),
     paddingVertical: getResponsiveDimension(10),
@@ -209,7 +210,7 @@ const generateStyles = ({
     height: isPortrait ? getResponsiveHeight(250) : getResponsiveHeight(500),
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: `${COLORS.PRIMARY_LIGHT_EXTRA}40`,
+    backgroundColor: `${COLORS.PRIMARY_BLUE}20`,
     elevation: 8,
     shadowColor: COLORS.PRIMARY_DARK_EXTRA,
     shadowOffset: { width: 0, height: 2 },
