@@ -1,0 +1,29 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "public/assets/fonts/AlegreyaSans-Black.ttf",
+      "sha1": "e2c92d8f696db25c7c104d59fe4153da526a7976"
+    },
+    {
+      "path": "public/assets/fonts/AlegreyaSans-Bold.ttf",
+      "sha1": "f88734a28bac669376d66662dac4fa81cb59705e"
+    },
+    {
+      "path": "public/assets/fonts/AlegreyaSans-Light.ttf",
+      "sha1": "109e0c62b47a946d7df5ff13824fd876810d7485"
+    },
+    {
+      "path": "public/assets/fonts/AlegreyaSans-Medium.ttf",
+      "sha1": "f132806ccb2fd0844eb8ba43c9f5f684697e285f"
+    },
+    {
+      "path": "public/assets/fonts/AlegreyaSans-Regular.ttf",
+      "sha1": "f7948392bdd91cb15db72254357f32d25b8566c0"
+    },
+    {
+      "path": "public/assets/fonts/AlegreyaSans-Thin.ttf",
+      "sha1": "d1cfd3600b13d727a88d13984130bcf8c9df3b73"
+    }
+  ]
+}

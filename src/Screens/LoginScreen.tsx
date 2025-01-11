@@ -4,7 +4,7 @@ import { Input, Button, Icon, Text, Image } from '@rneui/themed';
 import CommonHeader from '../CommonComponents/CommonHeader';
 import {ScaleSize, handleDeepLinkNavigation} from '../Utils';
 import { COLORS, DeepLinks, ImgUrl } from '../Constants';
-import Logo from '../assets';
+import Logo from '../../assets';
 
 const LoginScreen = ({ navigation }: any) => {
     const [username, setUsername] = useState('');

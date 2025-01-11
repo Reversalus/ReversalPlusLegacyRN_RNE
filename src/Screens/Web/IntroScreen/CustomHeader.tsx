@@ -47,16 +47,21 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection 
 
     const InfoItem: React.FC<InfoItemProps> = ({ iconUri, text }) => (
         <View style={styles.infoItem}>
+             <View style={styles.infoImageContainer}>
             <Image source={{ uri: iconUri }} style={styles.icon} />
+            </View>
             <Text style={styles.infoText}>{text}</Text>
+            <Text style={{ fontFamily: 'AlegreyaSans-Black', fontSize: 20 }}>
+        This is AlegreyaSans-Black
+      </Text>
         </View>
     );
 
     const renderContactInfo = useCallback(() => {
         const contactItems = [
-            { iconUri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/mail_new.png', text: '+91 800 123 456' },
-            { iconUri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/clock.png', text: 'info@Lifecare.com' },
-            { iconUri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/telephone.png', text: 'Daily: 7:00am - 8:00pm' },
+            { iconUri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/icon/phone.png', text: '+91 800 123 456' },
+            { iconUri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/icon/mail.png', text: 'info@Lifecare.com' },
+            { iconUri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/icon/alarm.png', text: 'Daily: 7:00am - 8:00pm' },
         ];
 
         return contactItems.map((item, index) => (
@@ -88,7 +93,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection 
             <View style={styles.topBar}>
                 <View style={styles.contactInfo}>
                     <Image
-                        source={{ uri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/reversal_long_logo.png' }}
+                        source={{ uri: 'https://raw.githubusercontent.com/Reversalus/Assets/main/Images/logo/new_Logo.png' }}
                         style={styles.logo}
                     />
                     {renderContactInfo()}
@@ -136,15 +141,14 @@ const generateStyles = ({
         },
         topBar: {
             backgroundColor: COLORS.WHITE,
-            paddingVertical: getResponsiveDimension(3),
+            paddingVertical: getResponsiveDimension(10),
             borderBottomWidth: 1,
-            borderBottomColor: '#ccc',
+            borderBottomColor: '#ccc'
         },
         logo: {
             width: getResponsiveWidth(180, 150),
             height: getResponsiveHeight(50),
             marginRight: getResponsiveDimension(20),
-            resizeMode: 'center',
         },
         contactInfo: {
             flexDirection: 'row',
@@ -159,19 +163,25 @@ const generateStyles = ({
             alignItems: 'center',
             marginHorizontal: getResponsiveDimension(10),
         },
+        infoImageContainer: {
+            backgroundColor: COLORS.PRIMARY_BLUE,
+            padding: getResponsiveDimension(10),
+            borderRadius: getResponsiveDimension(10),
+            marginRight: getResponsiveDimension(10)
+        },
         icon: {
-            width: getResponsiveWidth(35,15),
-            height: getResponsiveHeight(35,15),
+            width: getResponsiveWidth(25,15),
+            height: getResponsiveHeight(25,15),
             resizeMode: 'center',
-            marginHorizontal: 5,
+            marginHorizontal: 5
         },
         infoText: {
-            fontSize: getResponsiveFontSize(15, 8),
-            color: COLORS.PRIMARY,
-            fontWeight: '400',
+            fontSize: getResponsiveFontSize(95, 8),
+            color: COLORS.BLACK,
+            fontFamily: 'AlegreyaSans-Black'
         },
         navBar: {
-            backgroundColor: COLORS.PRIMARY_DARK_EXTRA,
+            backgroundColor: COLORS.PRIMARY_BLUE,
             paddingVertical: 6,
             shadowOffset: { width: 0, height: 3 },
             shadowOpacity: 0.2,
@@ -179,7 +189,7 @@ const generateStyles = ({
             elevation: 5
         },
         button: {
-            backgroundColor: COLORS.PINK_DARK,
+            backgroundColor: COLORS.PRIMARY,
             borderRadius: 25,
             paddingVertical: 10,
             paddingHorizontal: 15,

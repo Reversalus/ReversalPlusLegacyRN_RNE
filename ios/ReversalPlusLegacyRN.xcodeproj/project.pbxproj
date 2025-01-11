@@ -15,6 +15,12 @@
 		7699B88040F8A987B510C191 /* libPods-ReversalPlusLegacyRN-ReversalPlusLegacyRNTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-ReversalPlusLegacyRN-ReversalPlusLegacyRNTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		B4CD25DA734D72B554353905 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
+		0496EC2CDDC54CA3A1566F12 /* AlegreyaSans-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC599772813B45A29D611F19 /* AlegreyaSans-Black.ttf */; };
+		5C31FEC8E221418BA1A0A498 /* AlegreyaSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 48A50B936E994C4994CEEF7D /* AlegreyaSans-Bold.ttf */; };
+		21F7F10713314F318C0072AD /* AlegreyaSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8F4508A6A7C41D0A841C105 /* AlegreyaSans-Light.ttf */; };
+		D1D2F2D9BD4A4DBD8BD9C9EA /* AlegreyaSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8857EBCFDF664C42B991F1F4 /* AlegreyaSans-Medium.ttf */; };
+		D7977128C3DC4FC5B7044EF7 /* AlegreyaSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A974523AA980482DB2CC37A5 /* AlegreyaSans-Regular.ttf */; };
+		BFA16F3D70C1458D998B0297 /* AlegreyaSans-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD3F94EDA05B46FBBB514068 /* AlegreyaSans-Thin.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +52,12 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ReversalPlusLegacyRN/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-ReversalPlusLegacyRN-ReversalPlusLegacyRNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReversalPlusLegacyRN-ReversalPlusLegacyRNTests.release.xcconfig"; path = "Target Support Files/Pods-ReversalPlusLegacyRN-ReversalPlusLegacyRNTests/Pods-ReversalPlusLegacyRN-ReversalPlusLegacyRNTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		CC599772813B45A29D611F19 /* AlegreyaSans-Black.ttf */ = {isa = PBXFileReference; name = "AlegreyaSans-Black.ttf"; path = "../public/assets/fonts/AlegreyaSans-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		48A50B936E994C4994CEEF7D /* AlegreyaSans-Bold.ttf */ = {isa = PBXFileReference; name = "AlegreyaSans-Bold.ttf"; path = "../public/assets/fonts/AlegreyaSans-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C8F4508A6A7C41D0A841C105 /* AlegreyaSans-Light.ttf */ = {isa = PBXFileReference; name = "AlegreyaSans-Light.ttf"; path = "../public/assets/fonts/AlegreyaSans-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8857EBCFDF664C42B991F1F4 /* AlegreyaSans-Medium.ttf */ = {isa = PBXFileReference; name = "AlegreyaSans-Medium.ttf"; path = "../public/assets/fonts/AlegreyaSans-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A974523AA980482DB2CC37A5 /* AlegreyaSans-Regular.ttf */ = {isa = PBXFileReference; name = "AlegreyaSans-Regular.ttf"; path = "../public/assets/fonts/AlegreyaSans-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DD3F94EDA05B46FBBB514068 /* AlegreyaSans-Thin.ttf */ = {isa = PBXFileReference; name = "AlegreyaSans-Thin.ttf"; path = "../public/assets/fonts/AlegreyaSans-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -140,6 +152,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				0037A5D6DACC458CBCB6CBD3 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -165,6 +178,20 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		0037A5D6DACC458CBCB6CBD3 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				CC599772813B45A29D611F19 /* AlegreyaSans-Black.ttf */,
+				48A50B936E994C4994CEEF7D /* AlegreyaSans-Bold.ttf */,
+				C8F4508A6A7C41D0A841C105 /* AlegreyaSans-Light.ttf */,
+				8857EBCFDF664C42B991F1F4 /* AlegreyaSans-Medium.ttf */,
+				A974523AA980482DB2CC37A5 /* AlegreyaSans-Regular.ttf */,
+				DD3F94EDA05B46FBBB514068 /* AlegreyaSans-Thin.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -266,6 +293,12 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				B4CD25DA734D72B554353905 /* PrivacyInfo.xcprivacy in Resources */,
+				0496EC2CDDC54CA3A1566F12 /* AlegreyaSans-Black.ttf in Resources */,
+				5C31FEC8E221418BA1A0A498 /* AlegreyaSans-Bold.ttf in Resources */,
+				21F7F10713314F318C0072AD /* AlegreyaSans-Light.ttf in Resources */,
+				D1D2F2D9BD4A4DBD8BD9C9EA /* AlegreyaSans-Medium.ttf in Resources */,
+				D7977128C3DC4FC5B7044EF7 /* AlegreyaSans-Regular.ttf in Resources */,
+				BFA16F3D70C1458D998B0297 /* AlegreyaSans-Thin.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
