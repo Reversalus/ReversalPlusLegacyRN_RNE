@@ -33,9 +33,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Linking, Platform } from 'react-native';
 import { setNavigationRef, handleDeepLinkNavigation } from './src/Utils/NavigationUtils';
 import IntroScreen from './src/Screens/IntroScreen';
-import LoginScreen from './src/Screens/LoginScreen';
+import LoginScreen from './src/Screens/Common/LoginScreen';
 import MainLanding from "./src/Screens/MainLanding";
-
+import { DialogProvider } from './src/CommonComponents/AlertDialogue';
 // Create a Stack Navigator to manage the app's screens.
 const Stack = createStackNavigator();
 
@@ -112,6 +112,7 @@ const App = () => {
     }
 
     return (
+        <DialogProvider>
         <NavigationContainer
             ref={navigationRef}
             linking={linkingConfig}
@@ -123,6 +124,7 @@ const App = () => {
                 <Stack.Screen name="dashboard" component={MainLanding} />
             </Stack.Navigator>
         </NavigationContainer>
+        </DialogProvider>
     );
 };
 

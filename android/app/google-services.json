@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "387654630479",
+    "project_id": "reversalplus-93801",
+    "storage_bucket": "reversalplus-93801.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:387654630479:android:0c2c755bc0f7277cd13e3a",
+        "android_client_info": {
+          "package_name": "com.reversalpluslegacyrn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "387654630479-mbe0qlgmpvb4f8ne3859nm1atqsgfum8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.reversalpluslegacyrn",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "387654630479-0lig5for31nm2bagf93nfa4c92v6iptt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9NvRNdu-KyxJx3azTtTg0DOwOwbEC45U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "387654630479-0lig5for31nm2bagf93nfa4c92v6iptt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "387654630479-ofu2a00go30rjgijjtp1puegcglfknr2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.ReversalPlusLegacyRN"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

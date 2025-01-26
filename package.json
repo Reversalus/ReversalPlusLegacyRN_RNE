@@ -19,6 +19,11 @@
   },
   "dependencies": {
     "@lottiefiles/dotlottie-react": "^0.12.0",
+    "@react-native-async-storage/async-storage": "^2.1.0",
+    "@react-native-community/netinfo": "^11.4.1",
+    "@react-native-firebase/app": "^21.7.1",
+    "@react-native-firebase/auth": "^21.7.1",
+    "@react-native-google-signin/google-signin": "^13.1.0",
     "@react-navigation/native": "^7.0.14",
     "@react-navigation/stack": "^7.1.1",
     "@rneui/base": "git+https://github.com/Sanjeevkumar-kv29/react-native-elements.git#base",

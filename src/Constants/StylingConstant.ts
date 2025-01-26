@@ -11,6 +11,7 @@ const COLORS = {
     PINK_DARK: "#D93682", // Deep Magenta Pink
     PINK_LIGHT: "#FF80C1", // Soft Blush Pink
     PINK_LIGHT_EXTRA: "#FFB3D9", // Pale Pink
+    CRIMSRON_RED_PINK: "#960018",
 
     // Blue Shades
     PRIMARY_BLUE: "#157fda", // Cool Blue

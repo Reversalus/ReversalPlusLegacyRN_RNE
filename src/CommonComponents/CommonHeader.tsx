@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Header, Icon, Text, Button } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { COLORS } from '../Constants/StylingConstant';
-import {ScaleSize} from '../Utils/GenericUtils';
+import { ScaleSize } from '../Utils/GenericUtils';
 
 interface CommonHeaderProps {
     title?: string; // Nullable
@@ -11,8 +11,9 @@ interface CommonHeaderProps {
     rightIcon?: string; // Nullable
     rightText?: string; // Nullable
     onRightPress?: () => void; // Nullable
-    backGroundColor?: string
-    roundedIconBGColor?: string
+    backGroundColor?: string;
+    roundedIconBGColor?: string;
+    statusBarColor?: string
 }
 
 const CommonHeader: React.FC<CommonHeaderProps> = ({
@@ -22,9 +23,11 @@ const CommonHeader: React.FC<CommonHeaderProps> = ({
     rightText,
     onRightPress,
     backGroundColor,
-    roundedIconBGColor
+    roundedIconBGColor,
+    statusBarColor
 }) => {
     const navigation = useNavigation();
+
     return (
         <Header
             leftComponent={
@@ -74,6 +77,13 @@ const CommonHeader: React.FC<CommonHeaderProps> = ({
                 backgroundColor: backGroundColor ?? COLORS.WHITE, // Conditionally set background color
             }}
             placement="center" // Keeps everything centered
+            statusBarProps={{
+                animated: true,
+                backgroundColor: statusBarColor ?? COLORS.WHITE,
+                barStyle: "dark-content", // Or use dark-content based on your theme
+                showHideTransition: "fade",
+                hidden: false,
+            }}
         />
     );
 };
@@ -96,7 +106,7 @@ const styles = StyleSheet.create({
     iconContainer: {
         marginHorizontal: ScaleSize(10),
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     title: {
         color: COLORS.BLACK,
