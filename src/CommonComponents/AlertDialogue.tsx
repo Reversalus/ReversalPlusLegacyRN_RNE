@@ -1,7 +1,8 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { Dialog } from '@rneui/themed';
 import { COLORS } from '../Constants';
+import useResponsiveDimensions from '../Hooks/useResponsiveDimensions';
 
 interface ButtonProps {
     title: string;
@@ -39,6 +40,7 @@ export const DialogProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     const [toastProps, setToastProps] = useState<ToastProps | null>(null);
     const [toastVisible, setToastVisible] = useState(false);
     const [animValue] = useState(new Animated.Value(0));
+  const { getResponsiveDimension, getResponsiveHeight, getResponsiveWidth } = useResponsiveDimensions();
 
     const showDialog = (props: Omit<DialogProps, 'visible'>) => {
         setDialogProps({ ...props, visible: true });
@@ -47,6 +49,9 @@ export const DialogProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     const closeDialog = () => {
         setDialogProps(null);
     };
+
+    const styles = useMemo(() => generateStyles({ getResponsiveDimension, getResponsiveHeight, getResponsiveWidth }), 
+    [getResponsiveDimension, getResponsiveHeight, getResponsiveWidth]); 
 
     const showToast = (props: ToastProps) => {
         const defaultToastProps: ToastProps = {
@@ -185,38 +190,42 @@ export const useDialog = (): DialogContextType => {
     return context;
 };
 
-const styles = StyleSheet.create({
+const generateStyles = ({
+    getResponsiveDimension,
+    getResponsiveHeight,
+    getResponsiveWidth,
+  }: any) => StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        marginTop: 20,
+        marginTop: getResponsiveDimension(20),
     },
     leftButton: {
         flex: 1,
-        padding: 5,
+        padding: getResponsiveDimension(5),
     },
     rightButton: {
         flex: 1,
-        padding: 5,
+        padding: getResponsiveDimension(5),
     },
     button: {
-        width: 100,
-        height: 40,
+        width: getResponsiveWidth(100),
+        height: getResponsiveHeight(40),
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 5,
+        borderRadius: getResponsiveDimension(5),
     },
     buttonText: {
         color: COLORS.PRIMARY,
-        fontSize: 16,
+        fontSize: getResponsiveDimension(16),
         fontWeight: 'bold',
     },
     toast: {
         position: 'absolute',
-        padding: 10,
-        borderRadius: 15,
-        elevation: 10,
+        padding: getResponsiveDimension(8),
+        borderRadius: getResponsiveDimension(15),
+        elevation: getResponsiveDimension(10),
         width: '95%',
         alignSelf: 'center',
     },
@@ -225,23 +234,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     toastIconContainer: {
-        marginRight: 10,
+        marginRight: getResponsiveDimension(10),
     },
     toastMessage: {
         flex: 1,
         color: COLORS.WHITE,
-        fontSize: 14,
-        lineHeight: 18,
+        fontSize: getResponsiveDimension(14),
+        lineHeight: getResponsiveDimension(18),
         fontWeight: '500'
     },
     toastTop: {
-        top: 40,
+        top: getResponsiveDimension(50),
     },
     toastMid: {
         top: '50%',
-        marginTop: -25,
+        marginTop: getResponsiveDimension(-25),
     },
     toastBottom: {
-        bottom: 50,
+        bottom: getResponsiveDimension(50),
     },
 });

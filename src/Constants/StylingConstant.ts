@@ -1,7 +1,7 @@
 const COLORS = {
     // Primary Colors
     PRIMARY: "#39B49B", // Soft Green
-    PRIMARY_DARK: "#329182", // Deeper Green
+    PRIMARY_DARK: '#218B82' , // Deeper Green
     PRIMARY_DARK_EXTRA: "#0E705D", // Dark Forest Green
     PRIMARY_LIGHT: "#9FCEC0", // Light Mint Green
     PRIMARY_LIGHT_EXTRA: "#BBDDDC", // Very Light Mint
@@ -11,7 +11,7 @@ const COLORS = {
     PINK_DARK: "#D93682", // Deep Magenta Pink
     PINK_LIGHT: "#FF80C1", // Soft Blush Pink
     PINK_LIGHT_EXTRA: "#FFB3D9", // Pale Pink
-    CRIMSRON_RED_PINK: "#960018",
+    CRIMSRON_RED_PINK: "#C41E3A",
 
     // Blue Shades
     PRIMARY_BLUE: "#157fda", // Cool Blue
