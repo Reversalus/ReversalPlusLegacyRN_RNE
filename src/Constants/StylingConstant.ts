@@ -33,7 +33,7 @@ const COLORS = {
     ORANGE: "#E67E22", // Warm Orange
     BLACK: "#000000", // Black for text or deep backgrounds
     WHITE: "#FFFFFF", // Pure White
-    SHADE_WHITE: '#f5f5f5',
+    SHADE_WHITE: '#f8f8ff',
 
     // Complementary Colors for Balance
     ACCENT_YELLOW: "#FFC947", // Bright Yellow for Highlights

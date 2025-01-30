@@ -6,96 +6,32 @@ import {
   Dimensions,
   Animated,
 } from 'react-native';
-import {Input, Button, Text, BottomSheet, Image} from '@rneui/themed';
+import {Input, Button, Text, Image} from '@rneui/themed';
 import CommonHeader from '../../CommonComponents/CommonHeader';
 import {COLORS, ImgUrl} from '../../Constants';
 import {useFirebaseGoogleLogin} from '../../Hooks/useFirebaseGoogleLogin';
 import {useDialog} from '../../CommonComponents/AlertDialogue';
 import useResponsiveDimensions from '../../Hooks/useResponsiveDimensions';
 import AsyncStorageUtils from '../../Utils/AsyncStorageUtils';
-
-const countries = [
-  {cca2: 'IN', callingCode: ['91'], flag: '🇮🇳', name: 'India'},
-  {cca2: 'AF', callingCode: ['93'], flag: '🇦🇫', name: 'Afghanistan'},
-  {cca2: 'AL', callingCode: ['355'], flag: '🇦🇱', name: 'Albania'},
-  {cca2: 'DZ', callingCode: ['213'], flag: '🇩🇿', name: 'Algeria'},
-  {cca2: 'AS', callingCode: ['1'], flag: '🇦🇸', name: 'American Samoa'},
-  {cca2: 'AD', callingCode: ['376'], flag: '🇦🇩', name: 'Andorra'},
-  {cca2: 'AO', callingCode: ['244'], flag: '🇦🇴', name: 'Angola'},
-  {cca2: 'AI', callingCode: ['1'], flag: '🇦🇮', name: 'Anguilla'},
-  {cca2: 'AG', callingCode: ['1'], flag: '🇦🇬', name: 'Antigua and Barbuda'},
-  {cca2: 'AR', callingCode: ['54'], flag: '🇦🇷', name: 'Argentina'},
-  {cca2: 'AM', callingCode: ['374'], flag: '🇦🇲', name: 'Armenia'},
-  {cca2: 'AU', callingCode: ['61'], flag: '🇦🇺', name: 'Australia'},
-  {cca2: 'AT', callingCode: ['43'], flag: '🇦🇹', name: 'Austria'},
-  {cca2: 'AZ', callingCode: ['994'], flag: '🇦🇿', name: 'Azerbaijan'},
-  {cca2: 'BH', callingCode: ['973'], flag: '🇧🇭', name: 'Bahrain'},
-  {cca2: 'BD', callingCode: ['880'], flag: '🇧🇩', name: 'Bangladesh'},
-  {cca2: 'BY', callingCode: ['375'], flag: '🇧🇾', name: 'Belarus'},
-  {cca2: 'BE', callingCode: ['32'], flag: '🇧🇪', name: 'Belgium'},
-  {cca2: 'BZ', callingCode: ['501'], flag: '🇧🇿', name: 'Belize'},
-  {cca2: 'BJ', callingCode: ['229'], flag: '🇧🇯', name: 'Benin'},
-  {cca2: 'BT', callingCode: ['975'], flag: '🇧🇹', name: 'Bhutan'},
-  {cca2: 'BO', callingCode: ['591'], flag: '🇧🇴', name: 'Bolivia'},
-  {
-    cca2: 'BA',
-    callingCode: ['387'],
-    flag: '🇧🇦',
-    name: 'Bosnia and Herzegovina',
-  },
-  {cca2: 'BW', callingCode: ['267'], flag: '🇧🇼', name: 'Botswana'},
-  {cca2: 'BR', callingCode: ['55'], flag: '🇧🇷', name: 'Brazil'},
-  {cca2: 'BN', callingCode: ['673'], flag: '🇧🇳', name: 'Brunei'},
-  {cca2: 'BG', callingCode: ['359'], flag: '🇧🇬', name: 'Bulgaria'},
-  {cca2: 'KH', callingCode: ['855'], flag: '🇰🇭', name: 'Cambodia'},
-  {cca2: 'CM', callingCode: ['237'], flag: '🇨🇲', name: 'Cameroon'},
-  {cca2: 'CA', callingCode: ['1'], flag: '🇨🇦', name: 'Canada'},
-  {cca2: 'CN', callingCode: ['86'], flag: '🇨🇳', name: 'China'},
-  {cca2: 'CO', callingCode: ['57'], flag: '🇨🇴', name: 'Colombia'},
-  {cca2: 'CU', callingCode: ['53'], flag: '🇨🇺', name: 'Cuba'},
-  {cca2: 'DK', callingCode: ['45'], flag: '🇩🇰', name: 'Denmark'},
-  {cca2: 'EG', callingCode: ['20'], flag: '🇪🇬', name: 'Egypt'},
-  {cca2: 'FR', callingCode: ['33'], flag: '🇫🇷', name: 'France'},
-  {cca2: 'DE', callingCode: ['49'], flag: '🇩🇪', name: 'Germany'},
-  {cca2: 'GR', callingCode: ['30'], flag: '🇬🇷', name: 'Greece'},
-  {cca2: 'HK', callingCode: ['852'], flag: '🇭🇰', name: 'Hong Kong'},
-  {cca2: 'ID', callingCode: ['62'], flag: '🇮🇩', name: 'Indonesia'},
-  {cca2: 'IR', callingCode: ['98'], flag: '🇮🇷', name: 'Iran'},
-  {cca2: 'IQ', callingCode: ['964'], flag: '🇮🇶', name: 'Iraq'},
-  {cca2: 'IE', callingCode: ['353'], flag: '🇮🇪', name: 'Ireland'},
-  {cca2: 'IT', callingCode: ['39'], flag: '🇮🇹', name: 'Italy'},
-  {cca2: 'JP', callingCode: ['81'], flag: '🇯🇵', name: 'Japan'},
-  {cca2: 'KR', callingCode: ['82'], flag: '🇰🇷', name: 'South Korea'},
-  {cca2: 'MY', callingCode: ['60'], flag: '🇲🇾', name: 'Malaysia'},
-  {cca2: 'MX', callingCode: ['52'], flag: '🇲🇽', name: 'Mexico'},
-  {cca2: 'NL', callingCode: ['31'], flag: '🇳🇱', name: 'Netherlands'},
-  {cca2: 'NZ', callingCode: ['64'], flag: '🇳🇿', name: 'New Zealand'},
-  {cca2: 'NG', callingCode: ['234'], flag: '🇳🇬', name: 'Nigeria'},
-  {cca2: 'PK', callingCode: ['92'], flag: '🇵🇰', name: 'Pakistan'},
-  {cca2: 'PH', callingCode: ['63'], flag: '🇵🇭', name: 'Philippines'},
-  {cca2: 'RU', callingCode: ['7'], flag: '🇷🇺', name: 'Russia'},
-  {cca2: 'SA', callingCode: ['966'], flag: '🇸🇦', name: 'Saudi Arabia'},
-  {cca2: 'ZA', callingCode: ['27'], flag: '🇿🇦', name: 'South Africa'},
-  {cca2: 'ES', callingCode: ['34'], flag: '🇪🇸', name: 'Spain'},
-  {cca2: 'SE', callingCode: ['46'], flag: '🇸🇪', name: 'Sweden'},
-  {cca2: 'CH', callingCode: ['41'], flag: '🇨🇭', name: 'Switzerland'},
-  {cca2: 'TH', callingCode: ['66'], flag: '🇹🇭', name: 'Thailand'},
-  {cca2: 'TR', callingCode: ['90'], flag: '🇹🇷', name: 'Turkey'},
-  {cca2: 'UA', callingCode: ['380'], flag: '🇺🇦', name: 'Ukraine'},
-  {cca2: 'AE', callingCode: ['971'], flag: '🇦🇪', name: 'United Arab Emirates'},
-  {cca2: 'GB', callingCode: ['44'], flag: '🇬🇧', name: 'United Kingdom'},
-  {cca2: 'US', callingCode: ['1'], flag: '🇺🇸', name: 'United States'},
-  {cca2: 'VN', callingCode: ['84'], flag: '🇻🇳', name: 'Vietnam'},
-];
+import CommonBS from '../../CommonComponents/CommonBS';
+import CountryCodeList from '../../Constants/StaticDataObjects/CountryCodeList';
 
 const LoginScreen = ({navigation}) => {
+  const countries = useMemo(() => {
+    return CountryCodeList;
+  }, []);
   const [username, setUsername] = useState('');
   const [country, setCountry] = useState(countries[0]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [showCountryCodeBottomSheet, setshowCountryCodeBottomSheet] =
+    useState(false);
   const [isLoginPressed, setIsLoginPressed] = useState(false);
   const {showToast} = useDialog();
-  const {getResponsiveDimension, getResponsiveHeight, getResponsiveWidth} =
-    useResponsiveDimensions();
+  const {
+    getResponsiveDimension,
+    getResponsiveHeight,
+    getResponsiveWidth,
+    isWeb,
+  } = useResponsiveDimensions();
   const shakeAnim = useRef(new Animated.Value(0)).current;
   const debounceRef = useRef(0);
 
@@ -115,12 +51,13 @@ const LoginScreen = ({navigation}) => {
         getResponsiveDimension,
         getResponsiveHeight,
         getResponsiveWidth,
+        isWeb,
       }),
-    [getResponsiveDimension, getResponsiveHeight, getResponsiveWidth],
+    [getResponsiveDimension, getResponsiveHeight, getResponsiveWidth, isWeb],
   );
 
-  const handleOpenModal = () => setIsModalVisible(true);
-  const handleCloseModal = () => setIsModalVisible(false);
+  const handleOpenModal = () => setshowCountryCodeBottomSheet(true);
+  const handleCloseModal = () => setshowCountryCodeBottomSheet(false);
 
   const renderCountryList = () =>
     countries.map(item => (
@@ -217,12 +154,14 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <View style={styles.screen}>
-      <CommonHeader
-        backGroundColor={COLORS.WHITE}
-        roundedIconBGColor={COLORS.PRIMARY_DARK}
-        statusBarColor={COLORS.SHADE_WHITE}
-      />
-      <View style={styles.contentContainer}>
+      {!isWeb && (
+        <CommonHeader
+          backGroundColor={COLORS.WHITE}
+          roundedIconBGColor={COLORS.PRIMARY_DARK}
+          statusBarColor={COLORS.SHADE_WHITE}
+        />
+      )}
+      <View style={isWeb ? styles.contentContainerWeb : styles.contentContainer}>
         <View style={styles.formContainer}>
           <Text h3 style={styles.title}>
             Lets Get Start!
@@ -258,6 +197,7 @@ const LoginScreen = ({navigation}) => {
                       ? COLORS.CRIMSRON_RED_PINK
                       : 'black',
                   fontWeight: 'bold',
+                  fontSize: getResponsiveDimension(15, 12),
                 }}
                 placeholderTextColor={
                   isLoginPressed && !username
@@ -292,12 +232,15 @@ const LoginScreen = ({navigation}) => {
           </Text>
         </View>
       </View>
-      <BottomSheet
-        isVisible={isModalVisible}
-        onBackdropPress={handleCloseModal}
-        containerStyle={styles.bottomSheetContainer}>
-        <View style={styles.modalContainer}>{renderCountryList()}</View>
-      </BottomSheet>
+      <CommonBS
+        isVisible={showCountryCodeBottomSheet}
+        onClose={handleCloseModal}
+        children={renderCountryList()}
+        showCrossIcon={true}
+        onCrossIcon={handleCloseModal}
+        headerText="Select Country"
+        height={500}
+      />
     </View>
   );
 };
@@ -306,12 +249,21 @@ const generateStyles = ({
   getResponsiveDimension,
   getResponsiveHeight,
   getResponsiveWidth,
+  isWeb,
 }: any) =>
   StyleSheet.create({
     screen: {
-      backgroundColor: COLORS.WHITE,
-      alignItems: 'center',
+      backgroundColor: COLORS.SHADE_WHITE,
       flex: 1,
+    },
+    contentContainerWeb: {
+      backgroundColor: COLORS.WHITE,
+      width: getResponsiveDimension(500,300),
+      height: getResponsiveDimension(600,350),
+      alignSelf: 'center',
+      justifyContent: 'center',
+      padding: getResponsiveDimension(20,10),
+      marginTop: getResponsiveDimension(100)
     },
     contentContainer: {
       flex: 1,
@@ -331,8 +283,8 @@ const generateStyles = ({
       fontFamily: 'AlegreyaSans-Regular',
     },
     imgView: {
-      width: getResponsiveWidth(180),
-      height: getResponsiveHeight(150),
+      width: getResponsiveWidth(180, 150),
+      height: getResponsiveHeight(150, 100),
       marginStart: -35,
       resizeMode: 'stretch',
     },
@@ -340,7 +292,7 @@ const generateStyles = ({
       marginBottom: getResponsiveDimension(20),
       color: COLORS.BLACK,
       fontFamily: 'AlegreyaSans-Regular',
-      fontSize: getResponsiveDimension(15),
+      fontSize: getResponsiveDimension(15, 10),
     },
     countryCodeContainer: {
       flexDirection: 'row',
@@ -353,16 +305,16 @@ const generateStyles = ({
       padding: getResponsiveDimension(5),
     },
     flagText: {
-      fontSize: getResponsiveDimension(20),
+      fontSize: getResponsiveDimension(20, 15),
       marginRight: getResponsiveDimension(5),
     },
     callingCodeText: {
-      fontSize: getResponsiveDimension(16),
+      fontSize: getResponsiveDimension(16, 14),
       fontWeight: 'bold',
     },
     inputContainer: {
       flex: 1,
-      marginTop: getResponsiveDimension(18),
+      marginTop: getResponsiveHeight(18),
     },
     footerbutton: {
       flexDirection: 'row',
@@ -372,37 +324,23 @@ const generateStyles = ({
       borderRadius: getResponsiveDimension(10),
       backgroundColor: '#218B82',
       flexDirection: 'row',
-      padding: getResponsiveDimension(12),
+      padding: getResponsiveDimension(12, 10),
     },
     googleButton: {
       backgroundColor: COLORS.CRIMSRON_RED_PINK,
     },
     buttonTitle: {
-      fontSize: getResponsiveDimension(15),
+      fontSize: getResponsiveDimension(15, 10),
     },
     termsText: {
       marginTop: getResponsiveDimension(10),
       textAlign: 'center',
       color: 'gray',
-      fontSize: getResponsiveDimension(10),
+      fontSize: getResponsiveDimension(10, 8),
     },
     linkText: {
       color: COLORS.PRIMARY_DARK,
       fontWeight: 'bold',
-    },
-    bottomSheetContainer: {
-      backgroundColor: COLORS.BLUE_LIGHT,
-      position: 'absolute',
-      bottom: 0,
-      width: '100%',
-      height: Dimensions.get('window').height * 0.5,
-      borderTopLeftRadius: getResponsiveDimension(15),
-      borderTopRightRadius: getResponsiveDimension(15),
-      elevation: 5,
-    },
-    modalContainer: {
-      padding: getResponsiveDimension(20),
-      backgroundColor: 'white',
     },
     modalItem: {
       padding: getResponsiveDimension(10),

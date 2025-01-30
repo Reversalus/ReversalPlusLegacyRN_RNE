@@ -3,10 +3,11 @@
 import React, { useState, useCallback } from "react";
 import { Image, View, StyleSheet, Pressable } from "react-native";
 import { Header, SearchBar, Text, Button } from "@rneui/themed";
-import { COLORS } from "../../../Constants"; // Ensure your COLORS is correctly defined
+import { COLORS, DeepLinks } from "../../../Constants"; // Ensure your COLORS is correctly defined
 import { CustomHeaderProps, InfoItemProps, NavButtonProps } from "./type";
 import { GetStartedIntroModalWeb } from '../../Web';
 import useResponsiveDimensions from "../../../Hooks/useResponsiveDimensions";
+import { handleDeepLinkNavigation } from "../../../Utils/NavigationUtils";
 
 const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection }) => {
     const [search, setSearch] = useState<string>("");
@@ -116,7 +117,9 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ onNavigate, currentSection 
                         title="Get Started"
                         buttonStyle={styles.button}
                         titleStyle={styles.buttonTitle}
-                        onPress={openModal}
+                        onPress={
+                           () => handleDeepLinkNavigation.navigate(DeepLinks.LOGIN)
+                        }
                     />
                 </View>
             </View>
